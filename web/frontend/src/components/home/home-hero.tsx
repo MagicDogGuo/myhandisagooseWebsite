@@ -8,26 +8,26 @@ export function HomeHero() {
         <img
           src="/Herocover.png"
           alt="My Hand Is A Goose — VR goose comedy cover art"
-          className="block h-auto w-full"
+          className="block h-auto min-h-[18rem] w-full object-cover object-[center_35%] sm:min-h-0 sm:object-center"
           width={3000}
           height={900}
           decoding="async"
           fetchPriority="high"
         />
         <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-carbon/80 to-transparent"
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5 bg-gradient-to-t from-carbon/90 via-carbon/50 to-transparent sm:h-1/2 sm:from-carbon/80 sm:via-transparent"
           aria-hidden
         />
-        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 px-3 pb-3 sm:flex-row sm:items-end sm:justify-between sm:px-4 sm:pb-4">
-          <div>
+        <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 px-3 pb-3 pt-10 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:px-4 sm:pb-4 sm:pt-0">
+          <div className="min-w-0">
             <h1 className="sr-only">My Hand Is A Goose</h1>
             <p className="animate-rise text-hero-tagline max-w-sm text-white drop-shadow-sm">
               Your hand becomes a goose head. Steal bread, scoop goslings home,
               and try not to drop anything in the pond.
             </p>
           </div>
-          <div className="animate-rise-delay-1 flex flex-wrap gap-2">
-            <Button asChild size="sm" className="animate-signal">
+          <div className="animate-rise-delay-1 flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+            <Button asChild size="sm" className="animate-signal w-full sm:w-auto">
               <a
                 href={META_STORE_URL}
                 target="_blank"
@@ -36,7 +36,12 @@ export function HomeHero() {
                 Meta Store →
               </a>
             </Button>
-            <Button asChild size="sm" variant="amber">
+            <Button
+              asChild
+              size="sm"
+              variant="amber"
+              className="w-full sm:w-auto"
+            >
               <a href="#leaderboard">Demo ranks</a>
             </Button>
           </div>
