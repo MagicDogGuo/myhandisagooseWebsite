@@ -323,7 +323,7 @@ export class AppError extends Error {
 |--------|------|------|
 | GET | `/levels` | 列表 |
 | GET | `/levels/:levelId` | `LevelDoc` |
-| POST | `/feedback` | rate limit → honeypot → zod → Mongo → Resend（失敗不擋 201） |
+| POST | `/feedback` | rate limit → honeypot → zod → Mongo → Resend：開發者通知＋有 email 時感謝信（失敗不擋 201） |
 | GET | `/polls` | 議題＋票數＋`myVote` |
 | POST | `/polls/:pollId/vote` | 防刷 cookie + unique + IP limit |
 | GET | `/press/assets` | 清單 |
