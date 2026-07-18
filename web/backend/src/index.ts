@@ -4,6 +4,10 @@ import { createApp } from './app.js';
 import { loadConfig } from './config/appConfig.js';
 import { connectMongo, disconnectMongo } from './db/mongoose.js';
 import { createLogger } from './logger.js';
+import { FeedbackController } from './modules/feedback/feedback-controller.js';
+import { FeedbackMailService } from './modules/feedback/feedback-mail-service.js';
+import { FeedbackRepository } from './modules/feedback/feedback-repository.js';
+import { FeedbackService } from './modules/feedback/feedback-service.js';
 import { HealthController } from './modules/health/health-controller.js';
 import { LevelsController } from './modules/levels/levels-controller.js';
 import { LevelsRepository } from './modules/levels/levels-repository.js';
@@ -46,6 +50,16 @@ async function main(): Promise<void> {
   const levelsRepository = new LevelsRepository();
   const levelsService = new LevelsService(levelsRepository);
   const levelsController = new LevelsController(levelsService);
+
+  const feedbackRepository = new FeedbackRepository();
+  const feedbackMailService = new FeedbackMailService(config.sendgrid, logger);
+  const feedbackService = new FeedbackService(
+    feedbackRepository,
+    feedbackMailService,
+    logger,
+  );
+  const feedbackController = new FeedbackController(feedbackService);
+
   const healthController = new HealthController();
 
   const app = createApp({
@@ -54,6 +68,7 @@ async function main(): Promise<void> {
     controllers: {
       health: healthController,
       levels: levelsController,
+      feedback: feedbackController,
     },
   });
 

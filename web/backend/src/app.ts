@@ -7,12 +7,15 @@ import type { AppConfig } from './config/appConfig.js';
 import { createErrorHandler } from './errors/error-handler.js';
 import { asyncHandler } from './middleware/async-handler.js';
 import { createExpressErrorMiddleware } from './middleware/express-error-middleware.js';
+import { feedbackRateLimiter } from './middleware/rate-limiters.js';
+import type { FeedbackController } from './modules/feedback/feedback-controller.js';
 import type { HealthController } from './modules/health/health-controller.js';
 import type { LevelsController } from './modules/levels/levels-controller.js';
 
 export type AppControllers = {
   health: HealthController;
   levels: LevelsController;
+  feedback: FeedbackController;
 };
 
 export type CreateAppDeps = {
@@ -52,6 +55,13 @@ export function createApp(deps: CreateAppDeps): Express {
     '/api/v1/levels/:levelId',
     asyncHandler(async (req, res) => {
       controllers.levels.getById(req, res);
+    }),
+  );
+  app.post(
+    '/api/v1/feedback',
+    feedbackRateLimiter,
+    asyncHandler(async (req, res) => {
+      await controllers.feedback.create(req, res);
     }),
   );
 

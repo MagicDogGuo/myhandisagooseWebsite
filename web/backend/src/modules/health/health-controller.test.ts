@@ -1,24 +1,19 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import request from 'supertest';
-import pino from 'pino';
 
 import { createApp } from '../../app.js';
 import * as mongooseDb from '../../db/mongoose.js';
-import { HealthController } from './health-controller.js';
-import { LevelsController } from '../levels/levels-controller.js';
-import { LevelsRepository } from '../levels/levels-repository.js';
-import { LevelsService } from '../levels/levels-service.js';
 import { createTestConfig } from '../../test/test-config.js';
+import {
+  createSilentLogger,
+  createTestControllers,
+} from '../../test/create-test-controllers.js';
 
 function createTestApp() {
-  const levelsService = new LevelsService(new LevelsRepository());
   return createApp({
     config: createTestConfig(),
-    logger: pino({ level: 'silent' }),
-    controllers: {
-      health: new HealthController(),
-      levels: new LevelsController(levelsService),
-    },
+    logger: createSilentLogger(),
+    controllers: createTestControllers(),
   });
 }
 
