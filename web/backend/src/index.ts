@@ -4,6 +4,10 @@ import { createApp } from './app.js';
 import { loadConfig } from './config/appConfig.js';
 import { connectMongo, disconnectMongo } from './db/mongoose.js';
 import { createLogger } from './logger.js';
+import { HealthController } from './modules/health/health-controller.js';
+import { LevelsController } from './modules/levels/levels-controller.js';
+import { LevelsRepository } from './modules/levels/levels-repository.js';
+import { LevelsService } from './modules/levels/levels-service.js';
 
 const config = loadConfig();
 const logger = createLogger(config.nodeEnv);
@@ -38,7 +42,21 @@ async function main(): Promise<void> {
   await connectMongo(config.mongoUri);
   logger.info('mongo connected');
 
-  const app = createApp({ config, logger });
+  // Composition root: Repository → Service → Controller
+  const levelsRepository = new LevelsRepository();
+  const levelsService = new LevelsService(levelsRepository);
+  const levelsController = new LevelsController(levelsService);
+  const healthController = new HealthController();
+
+  const app = createApp({
+    config,
+    logger,
+    controllers: {
+      health: healthController,
+      levels: levelsController,
+    },
+  });
+
   server = app.listen(config.port, () => {
     logger.info({ port: config.port }, 'goose-web-backend listening');
   });

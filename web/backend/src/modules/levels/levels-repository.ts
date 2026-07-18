@@ -6,7 +6,7 @@ import matter from 'gray-matter';
 import { z } from 'zod';
 
 import { AppError } from '../../errors/app-error.js';
-import type { LevelDoc } from './level-types.js';
+import type { LevelDoc } from './types/index.js';
 
 const pitfallSchema = z.object({
   title: z.string().min(1),

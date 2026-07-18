@@ -3,12 +3,21 @@ import request from 'supertest';
 import pino from 'pino';
 
 import { createApp } from '../../app.js';
+import { HealthController } from '../health/health-controller.js';
+import { LevelsController } from './levels-controller.js';
+import { LevelsRepository } from './levels-repository.js';
+import { LevelsService } from './levels-service.js';
 import { createTestConfig } from '../../test/test-config.js';
 
 describe('levels API', () => {
+  const levelsService = new LevelsService(new LevelsRepository());
   const app = createApp({
     config: createTestConfig(),
     logger: pino({ level: 'silent' }),
+    controllers: {
+      health: new HealthController(),
+      levels: new LevelsController(levelsService),
+    },
   });
 
   it('GET /api/v1/levels returns levels 0-3 summaries', async () => {

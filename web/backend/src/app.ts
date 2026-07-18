@@ -5,24 +5,26 @@ import type { Logger } from 'pino';
 
 import type { AppConfig } from './config/appConfig.js';
 import { createErrorHandler } from './errors/error-handler.js';
+import { asyncHandler } from './middleware/async-handler.js';
 import { createExpressErrorMiddleware } from './middleware/express-error-middleware.js';
-import { createHealthRouter } from './modules/health/health-router.js';
-import { createLevelsRouter } from './modules/levels/levels-router.js';
-import { LevelsRepository } from './modules/levels/levels-repository.js';
-import { LevelsService } from './modules/levels/levels-service.js';
+import type { HealthController } from './modules/health/health-controller.js';
+import type { LevelsController } from './modules/levels/levels-controller.js';
+
+export type AppControllers = {
+  health: HealthController;
+  levels: LevelsController;
+};
 
 export type CreateAppDeps = {
   config: AppConfig;
   logger: Logger;
-  levelsService?: LevelsService;
+  controllers: AppControllers;
 };
 
 export function createApp(deps: CreateAppDeps): Express {
-  const { config, logger } = deps;
+  const { config, logger, controllers } = deps;
   const app = express();
   const errorHandler = createErrorHandler(logger);
-  const levelsService =
-    deps.levelsService ?? new LevelsService(new LevelsRepository());
 
   app.use(helmet());
   app.use(
@@ -33,8 +35,25 @@ export function createApp(deps: CreateAppDeps): Express {
   );
   app.use(express.json({ limit: '100kb' }));
 
-  app.use(createHealthRouter());
-  app.use('/api/v1/levels', createLevelsRouter(levelsService));
+  // Central route table — no express.Router() modules
+  app.get(
+    '/health',
+    asyncHandler(async (req, res) => {
+      controllers.health.getHealth(req, res);
+    }),
+  );
+  app.get(
+    '/api/v1/levels',
+    asyncHandler(async (req, res) => {
+      controllers.levels.list(req, res);
+    }),
+  );
+  app.get(
+    '/api/v1/levels/:levelId',
+    asyncHandler(async (req, res) => {
+      controllers.levels.getById(req, res);
+    }),
+  );
 
   app.use(createExpressErrorMiddleware(errorHandler));
 

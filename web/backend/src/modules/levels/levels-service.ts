@@ -1,5 +1,5 @@
 import { AppError } from '../../errors/app-error.js';
-import type { LevelDoc, LevelSummary } from './level-types.js';
+import type { LevelDoc, LevelSummary } from './types/index.js';
 import type { LevelsRepository } from './levels-repository.js';
 
 export class LevelsService {
