@@ -194,13 +194,13 @@ feat(frontend): add level encyclopedia pages with safe markdown
 - **做：**
   - `FeedbackController` + service／repository／mail service（config 注入）
   - `index.ts` 組裝；`app.ts` 用 `app.post('/api/v1/feedback', …)` 註冊
-  - rate limit、honeypot、zod、Mongo、寄信（失敗不擋 201）
+  - rate limit、honeypot、zod、Mongo、寄信（開發者通知；有 email 時感謝信；失敗不擋 201）
 - **不要做：** 前端表單；**不要**獨立 Router 檔
-- **驗收：** Compass 見文件；信箱收到通知（或 mock 測）；honeypot／429 行為正確
+- **驗收：** Compass 見文件；開發者收到通知；有填 email 時對方收到感謝信（或 mock 測）；honeypot／429 行為正確
 - **建議 commit message：**
 
 ```
-feat(backend): add feedback API with resend notify
+feat(backend): add feedback API with resend notify and thank-you
 ```
 
 ---
