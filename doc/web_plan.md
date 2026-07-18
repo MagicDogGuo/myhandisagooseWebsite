@@ -3,11 +3,11 @@
 > **對應文件：**
 > - 遊戲設計：[`vr_goose_game_design.md`](vr_goose_game_design.md) v2.1
 > - 前端規格：[`web_frontend_react.md`](web_frontend_react.md)
-> - **視覺設計規範：** [`Nintendodesign.md`](Nintendodesign.md) ← 前端 UI／Landing 參考（Y2K console-chrome）
+> - **視覺設計規範：** [`Playstationdesign.md`](Playstationdesign.md) ← 前端 UI／Landing 參考（三 canvas 色帶／pill CTA）
 > - 後端規格：[`web_backend_express.md`](web_backend_express.md)
 > - **AI 分 Task／分 Commit 清單：** [`web_dev_tasks.md`](web_dev_tasks.md) ← 給 Agent 逐項實作與 commit
 >
-> **文件版本：** v1.6　**最後更新：** 2026-07-18
+> **文件版本：** v1.7　**最後更新：** 2026-07-18
 
 ---
 

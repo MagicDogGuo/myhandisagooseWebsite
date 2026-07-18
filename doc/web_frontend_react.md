@@ -1,9 +1,9 @@
 # 🪿 官方網站 — React + TypeScript 前端規格
 
 > **對應文件：** [`web_plan.md`](web_plan.md)（總計畫）、[`web_backend_express.md`](web_backend_express.md)（後端 API）  
-> **視覺設計規範：** [`Nintendodesign.md`](Nintendodesign.md)（Y2K console-chrome；前端實作 UI 時必讀）  
+> **視覺設計規範：** [`Playstationdesign.md`](Playstationdesign.md)（三 canvas 色帶／pill CTA；前端實作 UI 時必讀）  
 > **對齊 Cursor rule：** `react=best-practice.mdc`  
-> **文件版本：** v1.5　**最後更新：** 2026-07-18
+> **文件版本：** v1.6　**最後更新：** 2026-07-18
 
 ---
 
@@ -105,23 +105,25 @@ web/frontend/
 
 ### 2.3 視覺設計（必讀）
 
-前端設計與實作 UI 時，以 [`Nintendodesign.md`](Nintendodesign.md) 為視覺語言依據（Nintendo.com circa 2001 console-chrome）。重點摘要：
+前端設計與實作 UI 時，以 [`Playstationdesign.md`](Playstationdesign.md) 為視覺語言依據（PlayStation 行銷站：章節式 full-bleed 色帶）。重點摘要：
 
 | 面向 | 方向 |
 |------|------|
-| 整體感覺 | 頁面像組裝好的主機面板：bevel 金屬板、chamfer 切角，不是現代卡片牆 |
-| 色票 | 冷色 periwinkle chrome + carbon 指揮層；暖色（amber／signal orange）只做「前進／操作」訊號 |
-| 字級處理 | 結構標籤 uppercase + tracking；hero 字用 outline + hard drop shadow（box-art） |
-| 深度 | 硬 bevel／切角，不用模糊 soft shadow |
-| 密度 | 模組緊貼、縫隙當結構縫，避免過大留白 |
+| 整體感覺 | 頁面像 launch trailer 分章滾動：dark／light／primary blue 色帶交替，色帶本身即分隔，無裝飾 divider |
+| 色票 | Canvas dark `#000`、canvas light `#fff`、primary `#0070d1`；commerce orange `#d53b00` 僅商店／Buy／Pre-order |
+| 字級處理 | Display 標題用 weight **300**（空氣感 editorial）；CTA 用 weight **700** pill；階層 54→44→35→28→22→18 |
+| 形狀 | CTA／filter 一律 `{rounded.full}` pill；產品卡／game tile `{rounded.md}`（8px）；結構面（nav／hero／footer）`{rounded.none}` |
+| 深度 | 預設 flat；卡片 resting 無 soft shadow，僅 press 時短暫抬起；章節對比靠表面色差 |
 
-**與本專案的適配（不要照抄 2001 固定寬）：**
+**與本專案的適配：**
 
-- 仍遵守本規格的 **手機優先／響應式**（`Nintendodesign.md` 的「現代 port」建議：窄螢幕堆疊右欄、nav 收合）
-- 品牌換成「鵝頭偷麵包」；色票與 bevel 語彙可沿用，Mario／Nintendo 商標素材不可用
-- shadcn 元件可當互動 primitive，但外觀 token（色、圓角、bevel）應對齊該設計規範，勿維持預設「圓角卡片 + soft shadow」風格
+- 仍遵守本規格的 **手機優先／響應式**（`Playstationdesign.md` Responsive：768px hamburger、hero 字級下縮、section padding 96→64→48）
+- 品牌換成「鵝頭偷麵包」；語彙沿用色帶節奏／pill／token，**不可**使用 PlayStation／Sony 商標（P-logo、SST 字體本體、官方 key art）
+- 字體替代：display 用 Roboto Light 300 或 Source Sans 300；body／chrome 用 Inter（見設計稿 Font Substitutes）
+- shadcn 元件可當互動 primitive，但外觀 token（色、圓角、字重）應對齊該設計規範；**不要**做成 Nintendo bevel／chamfer，也勿維持預設「厚圓角 + soft shadow」風格
+- 每頁最多一個 full-bleed primary blue band（通常留給 footer 或單一高優先 CTA strip）
 
-實作 Tailwind／CSS 變數時，優先對照 `Nintendodesign.md` 的 Colors、Typography、Shapes、Do's and Don'ts。
+實作 Tailwind／CSS 變數時，優先對照 `Playstationdesign.md` 的 Colors、Typography、Shapes、Components、Do's and Don'ts。
 
 ---
 
@@ -298,7 +300,7 @@ OIDC → `s3 sync` → CloudFront invalidate（路徑含 `/index.html`、`/asset
 ## 9. 驗收清單（Phase 1）
 
 - [ ] shadcn 用於主要 UI
-- [ ] 視覺語彙對齊 [`Nintendodesign.md`](Nintendodesign.md)（bevel／色票／暖色僅訊號；非預設圓角軟陰影）
+- [ ] 視覺語彙對齊 [`Playstationdesign.md`](Playstationdesign.md)（三 canvas 色帶／pill CTA／display 300；非 bevel、非預設 soft shadow）
 - [ ] 路由 lazy；ErrorBoundary 生效
 - [ ] Markdown 消毒渲染
 - [ ] Demo 排行、關卡 0–3、回饋、投票、Press、3D

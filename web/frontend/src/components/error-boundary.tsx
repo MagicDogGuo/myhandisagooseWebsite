@@ -48,9 +48,11 @@ type ErrorFallbackProps = {
 
 export function ErrorFallback({ onRetry }: ErrorFallbackProps) {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-4 p-6 text-center">
-      <h1 className="text-2xl font-semibold">Something went wrong</h1>
-      <p className="text-muted-foreground max-w-md text-sm">
+    <div className="bg-canvas-dark text-on-dark flex min-h-svh flex-col items-center justify-center gap-4 p-6 text-center">
+      <h1 className="font-display text-[28px] tracking-[0.1px]">
+        Something went wrong
+      </h1>
+      <p className="text-body-dark max-w-md text-lg leading-normal">
         Please try again. If the problem continues, refresh the page.
       </p>
       {onRetry ? (

@@ -5,10 +5,10 @@
 > - [`web_plan.md`](web_plan.md)
 > - [`web_backend_express.md`](web_backend_express.md) v1.5+
 > - [`web_frontend_react.md`](web_frontend_react.md) v1.5+
-> - **視覺設計：** [`Nintendodesign.md`](Nintendodesign.md)（前端 UI／Landing 必讀）
+> - **視覺設計：** [`Playstationdesign.md`](Playstationdesign.md)（前端 UI／Landing 必讀）
 > - 遊戲內容：[`vr_goose_game_design.md`](vr_goose_game_design.md)（關卡 0–3）
 >
-> **文件版本：** v1.2　**最後更新：** 2026-07-18
+> **文件版本：** v1.3　**最後更新：** 2026-07-18
 
 ---
 
@@ -20,7 +20,7 @@
    - 後端：`process.env` 只在 `appConfig.ts`；Service constructor 注入 config（camelCase）。
    - 後端架構：`index.ts` 為 composition root（手動組裝 DB／Cache／Service → Controller）；`app.ts` 用 `app.get`／`post`／… 註冊中央路由表；**無**獨立 Router 檔；Controller 只處理 HTTP，業務在 Service。
    - 前端：kebab-case 檔名、shadcn、TanStack Query、Zustand（僅 client UI）。
-   - 前端視覺：對齊 [`Nintendodesign.md`](Nintendodesign.md)（bevel chrome、暖色僅訊號）；細節見 `web_frontend_react.md` §2.3。
+   - 前端視覺：對齊 [`Playstationdesign.md`](Playstationdesign.md)（三 canvas 色帶、pill CTA、SST 輕量 display）；細節見 `web_frontend_react.md` §2.3。
 4. 完成後跑該 Task 的「驗收」；通過才 commit。
 5. **Commit**：僅在使用者要求、或本 Task 驗收通過且使用者／流程允許時。訊息用下方「建議 commit message」，聚焦 why。不要把無關檔案塞進同一個 commit。
 6. **不要**提早做 M6（GitHub Actions／正式 AWS）除非目前 Task 就是那一項。
@@ -133,11 +133,12 @@ feat(backend): add levels 0-3 encyclopedia API from markdown
 
 ### T04 — 前端骨架 + shadcn + 路由
 
-- **讀取規格：** `web_frontend_react.md` §1–3.0、§2.3；[`Nintendodesign.md`](Nintendodesign.md) Colors／Shapes（定 token 用）
+- **讀取規格：** `web_frontend_react.md` §1–3.0、§2.3；[`Playstationdesign.md`](Playstationdesign.md) Colors／Typography／Shapes（定 token 用）
 - **做：**
   - `web/frontend` Vite React TS Tailwind
   - 初始化 shadcn；`components/ui` 基礎 Button／Skeleton
-  - Tailwind／CSS 變數先對齊 `Nintendodesign.md` 色票與圓角原則（可之後再細調 bevel）
+  - Tailwind／CSS 變數先對齊 `Playstationdesign.md`：canvas-dark／light、primary `#0070d1`、commerce、pill／8px radius
+  - 字體：SST 替代（display 用 Roboto Light 300 或 Source Sans 300；body／chrome 用 Inter）
   - `app.tsx`：ErrorBoundary、Suspense、lazy routes（可先空頁）
   - `api/client.ts` + TanStack Query provider
   - kebab-case 檔名；`.env.example`（`VITE_API_BASE_URL`）
@@ -153,14 +154,15 @@ chore(frontend): scaffold vite react with shadcn and lazy routes
 
 ### T05 — Layout + Landing + Demo 排行 + 接 levels 摘要
 
-- **讀取規格：** `web_frontend_react.md` §2.3、§3.1；`web_plan.md` Landing；[`Nintendodesign.md`](Nintendodesign.md)
+- **讀取規格：** `web_frontend_react.md` §2.3、§3.1；`web_plan.md` Landing；[`Playstationdesign.md`](Playstationdesign.md)
 - **做：**
-  - Navbar／Footer（carbon 指揮層語彙）
-  - Home：Hero、特色、Demo 排行榜（假資料 + Demo data 徽章）；視覺對齊 Nintendo chrome（bevel 面板、暖色 CTA）
+  - Navbar／Footer（dark canvas nav；footer 用 primary blue band）
+  - Home：Hero、特色、Demo 排行榜（假資料 + Demo data 徽章）；視覺對齊 PS 色帶節奏（dark／light／blue 章節、pill CTA）
+  - Primary CTA 用 PlayStation Blue；商店／Buy CTA 才用 commerce orange
   - 可選：首頁顯示關卡摘要（打 `GET /levels`）
   - 商店 CTA 外連（URL 可先 placeholder）
-- **不要做：** 真實評分、回饋表單；不要照抄 Nintendo／Mario 商標素材
-- **驗收：** 本機串後端可看到關卡摘要或至少 Demo 排行正確；首屏可辨識為 console-chrome 而非預設 shadcn 風格
+- **不要做：** 真實評分、回饋表單；不要照抄 PlayStation／Sony 商標素材（P-logo、SST 本體字等）
+- **驗收：** 本機串後端可看到關卡摘要或至少 Demo 排行正確；首屏可辨識為 PS 式 full-bleed 色帶而非預設 shadcn／Nintendo bevel 風格
 - **建議 commit message：**
 
 ```

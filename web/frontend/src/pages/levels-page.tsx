@@ -12,45 +12,47 @@ export function LevelsPage() {
   });
 
   return (
-    <main className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
-      <p className="text-muted-foreground text-sm tracking-wide uppercase">
-        Encyclopedia
-      </p>
-      <h1 className="font-display mt-2 text-4xl tracking-tight sm:text-5xl">
-        Levels 0–3
-      </h1>
-      <p className="text-muted-foreground mt-4 max-w-2xl">
-        Training focus, English prompts, and common failure modes for the early
-        goose curriculum.
-      </p>
-
-      {isPending ? (
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {Array.from({ length: 4 }).map((_, index) => (
-            <Skeleton key={index} className="h-40 w-full" />
-          ))}
-        </div>
-      ) : null}
-
-      {isError ? (
-        <p className="text-muted-foreground mt-10 text-sm" role="alert">
-          Could not load levels. Check that the API is running, then{' '}
-          <Link to="/levels" className="underline underline-offset-4">
-            try again
-          </Link>
-          .
+    <main className="hero-band-light">
+      <div className="band-inner band-pad">
+        <p className="text-mute-light text-sm font-medium tracking-[0.4px]">
+          Encyclopedia
         </p>
-      ) : null}
+        <h1 className="font-display mt-3 text-[32px] tracking-[-0.1px] sm:text-[44px] lg:text-[54px]">
+          Levels 0–3
+        </h1>
+        <p className="text-body-light mt-4 max-w-xl text-lg leading-normal">
+          Training focus, English prompts, and common failure modes for the early
+          goose curriculum.
+        </p>
 
-      {data ? (
-        <ul className="mt-10 grid gap-4 sm:grid-cols-2">
-          {data.levels.map((level) => (
-            <li key={level.levelId}>
-              <LevelCard level={level} />
-            </li>
-          ))}
-        </ul>
-      ) : null}
+        {isPending ? (
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <Skeleton key={index} className="h-40 w-full rounded-md" />
+            ))}
+          </div>
+        ) : null}
+
+        {isError ? (
+          <p className="text-mute-light mt-10 text-sm" role="alert">
+            Could not load levels. Check that the API is running, then{' '}
+            <Link to="/levels" className="text-link-light">
+              try again
+            </Link>
+            .
+          </p>
+        ) : null}
+
+        {data ? (
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2">
+            {data.levels.map((level) => (
+              <li key={level.levelId}>
+                <LevelCard level={level} />
+              </li>
+            ))}
+          </ul>
+        ) : null}
+      </div>
     </main>
   );
 }

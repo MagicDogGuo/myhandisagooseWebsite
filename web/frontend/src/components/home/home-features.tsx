@@ -18,23 +18,30 @@ const FEATURES = [
 
 export function HomeFeatures() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-      <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
-        Why players honk
-      </h2>
-      <p className="text-muted-foreground mt-3 max-w-2xl">
-        A short VR physics comedy about bad decisions with baked goods.
-      </p>
-      <ul className="mt-10 grid gap-8 sm:grid-cols-3">
-        {FEATURES.map((feature) => (
-          <li key={feature.title}>
-            <h3 className="font-display text-xl">{feature.title}</h3>
-            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-              {feature.detail}
-            </p>
-          </li>
-        ))}
-      </ul>
+    <section className="hero-band-light">
+      <div className="band-inner band-pad">
+        <h2 className="font-display text-[28px] tracking-[0.1px] sm:text-[35px] lg:text-[44px]">
+          Why players honk
+        </h2>
+        <p className="text-body-light mt-4 max-w-xl text-lg leading-normal">
+          A short VR physics comedy about bad decisions with baked goods.
+        </p>
+        <ul className="mt-12 grid gap-8 sm:grid-cols-3 sm:gap-6">
+          {FEATURES.map((feature) => (
+            <li
+              key={feature.title}
+              className="bg-surface-card rounded-md p-6 md:p-8"
+            >
+              <h3 className="font-display text-[22px] tracking-[0.1px]">
+                {feature.title}
+              </h3>
+              <p className="text-body-light mt-3 text-base leading-normal">
+                {feature.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

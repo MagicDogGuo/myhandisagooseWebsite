@@ -20,41 +20,51 @@ const SAFE_MARKDOWN_SCHEMA = {
 
 const markdownComponents: Components = {
   a: ({ href, children, title }) => (
-    <a href={href} title={title} rel="noopener noreferrer" target="_blank">
+    <a
+      href={href}
+      title={title}
+      rel="noopener noreferrer"
+      target="_blank"
+      className="text-link-light"
+    >
       {children}
     </a>
   ),
   h2: ({ children }) => (
-    <h2 className="font-display mt-8 text-2xl tracking-tight first:mt-0">
+    <h2 className="font-display mt-8 text-[28px] tracking-[0.1px] first:mt-0">
       {children}
     </h2>
   ),
   h3: ({ children }) => (
-    <h3 className="font-display mt-6 text-xl tracking-tight">{children}</h3>
+    <h3 className="font-display mt-6 text-[22px] tracking-[0.1px]">
+      {children}
+    </h3>
   ),
   h4: ({ children }) => (
     <h4 className="mt-4 text-lg font-semibold">{children}</h4>
   ),
   p: ({ children }) => (
-    <p className="text-muted-foreground mt-3 leading-relaxed">{children}</p>
+    <p className="text-body-light mt-3 text-lg leading-normal">{children}</p>
   ),
   ul: ({ children }) => (
-    <ul className="text-muted-foreground mt-3 list-disc space-y-1 pl-5">
+    <ul className="text-body-light mt-3 list-disc space-y-1 pl-5 text-lg leading-normal">
       {children}
     </ul>
   ),
   ol: ({ children }) => (
-    <ol className="text-muted-foreground mt-3 list-decimal space-y-1 pl-5">
+    <ol className="text-body-light mt-3 list-decimal space-y-1 pl-5 text-lg leading-normal">
       {children}
     </ol>
   ),
-  li: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  li: ({ children }) => <li className="leading-normal">{children}</li>,
   strong: ({ children }) => (
-    <strong className="text-foreground font-semibold">{children}</strong>
+    <strong className="text-foreground font-medium">{children}</strong>
   ),
   em: ({ children }) => <em className="italic">{children}</em>,
   code: ({ children }) => (
-    <code className="bg-secondary rounded px-1.5 py-0.5 text-sm">{children}</code>
+    <code className="bg-surface-soft rounded-sm px-1.5 py-0.5 text-sm">
+      {children}
+    </code>
   ),
 };
 

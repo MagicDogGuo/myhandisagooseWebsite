@@ -11,15 +11,20 @@ export function LevelPitfalls({ pitfalls }: LevelPitfallsProps) {
 
   return (
     <section>
-      <h2 className="font-display text-2xl tracking-tight">Common pitfalls</h2>
-      <p className="text-muted-foreground mt-2 text-sm">
+      <h2 className="font-display text-[28px] tracking-[0.1px]">
+        Common pitfalls
+      </h2>
+      <p className="text-body-light mt-3 text-base leading-normal">
         Watch out for these failure modes while training.
       </p>
       <ul className="mt-6 space-y-4">
         {pitfalls.map((pitfall) => (
-          <li key={pitfall.title} className="border-border/60 border-l-2 pl-4">
-            <h3 className="font-medium">{pitfall.title}</h3>
-            <p className="text-muted-foreground mt-1 text-sm leading-relaxed">
+          <li
+            key={pitfall.title}
+            className="border-hairline-light border-b py-4 last:border-0"
+          >
+            <h3 className="text-lg font-semibold">{pitfall.title}</h3>
+            <p className="text-body-light mt-1 text-base leading-normal">
               {pitfall.detail}
             </p>
           </li>

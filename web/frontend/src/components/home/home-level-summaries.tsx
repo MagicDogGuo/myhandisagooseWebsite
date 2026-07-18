@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import { fetchLevelSummaries } from '@/api/levels';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function HomeLevelSummaries() {
@@ -11,53 +12,52 @@ export function HomeLevelSummaries() {
   });
 
   return (
-    <section className="border-border/50 bg-secondary/40 border-y">
-      <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
+    <section className="hero-band-light">
+      <div className="band-inner band-pad">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
+            <h2 className="font-display text-[28px] tracking-[0.1px] sm:text-[35px] lg:text-[44px]">
               Levels 0–3
             </h2>
-            <p className="text-muted-foreground mt-3 max-w-xl">
+            <p className="text-body-light mt-4 max-w-xl text-lg leading-normal">
               Training notes and English prompts from the encyclopedia API.
             </p>
           </div>
-          <Link
-            to="/levels"
-            className="text-sm font-medium underline-offset-4 hover:underline"
-          >
-            Browse all levels
-          </Link>
+          <Button asChild variant="outline" size="sm">
+            <Link to="/levels">Browse all levels</Link>
+          </Button>
         </div>
 
         {isPending ? (
-          <div className="mt-10 grid gap-4 sm:grid-cols-2">
+          <div className="mt-12 grid gap-6 sm:grid-cols-2">
             {Array.from({ length: 4 }).map((_, index) => (
-              <Skeleton key={index} className="h-28 w-full" />
+              <Skeleton key={index} className="h-32 w-full rounded-md" />
             ))}
           </div>
         ) : null}
 
         {isError ? (
-          <p className="text-muted-foreground mt-8 text-sm">
+          <p className="text-mute-light mt-8 text-sm">
             Could not load level summaries. Demo leaderboard above still works
             offline.
           </p>
         ) : null}
 
         {data ? (
-          <ul className="mt-10 grid gap-6 sm:grid-cols-2">
+          <ul className="mt-12 grid gap-6 sm:grid-cols-2">
             {data.levels.map((level) => (
               <li key={level.levelId}>
                 <Link
                   to={`/levels/${level.levelId}`}
-                  className="hover:border-brand-teal/40 block rounded-lg border border-transparent p-1 transition-colors"
+                  className="bg-surface-card block rounded-md p-6 transition-shadow active:shadow-[0_4px_12px_rgba(0,0,0,0.16)] md:p-8"
                 >
-                  <p className="text-muted-foreground text-xs tracking-wide uppercase">
+                  <p className="text-mute-light text-sm">
                     Level {level.levelId}
                   </p>
-                  <h3 className="font-display mt-1 text-xl">{level.title}</h3>
-                  <p className="text-muted-foreground mt-2 text-sm italic">
+                  <h3 className="font-display mt-2 text-[22px] tracking-[0.1px]">
+                    {level.title}
+                  </h3>
+                  <p className="text-body-light mt-3 text-base leading-normal">
                     {level.promptEn}
                   </p>
                 </Link>

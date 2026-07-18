@@ -4,34 +4,43 @@ import { META_STORE_URL } from '@/lib/store-links';
 
 export function SiteFooter() {
   return (
-    <footer className="border-border/60 mt-auto border-t">
-      <div className="text-muted-foreground mx-auto flex max-w-6xl flex-col gap-3 px-4 py-8 text-sm sm:flex-row sm:items-center sm:justify-between sm:px-6">
-        <p>
-          <span className="font-display text-foreground">My Hand Is A Goose</span>
-          {' — '}a VR goose comedy on Meta Quest.
+    <footer className="bg-primary text-on-dark mt-auto">
+      <div className="band-inner flex flex-col gap-8 px-6 py-12 md:px-12">
+        <p className="font-display text-2xl tracking-[0.1px] sm:text-[28px]">
+          My Hand Is A Goose
         </p>
-        <div className="flex flex-wrap gap-4">
-          <a
-            href={META_STORE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-foreground underline-offset-4 hover:underline"
-          >
-            Meta Store
-          </a>
-          <Link
-            to="/press"
-            className="hover:text-foreground underline-offset-4 hover:underline"
-          >
-            Press Kit
-          </Link>
-          <a
-            href="mailto:hello@myhandisagoose.example"
-            className="hover:text-foreground underline-offset-4 hover:underline"
-          >
-            Contact
-          </a>
+        <div className="flex flex-col gap-8 sm:flex-row sm:justify-between">
+          <p className="max-w-md text-sm leading-normal text-white/80">
+            A VR goose comedy on Meta Quest — steal bread, scoop goslings, try
+            not to drop anything in the pond.
+          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+            <a
+              href={META_STORE_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-white"
+            >
+              Meta Store
+            </a>
+            <Link to="/press" className="hover:text-white">
+              Press Kit
+            </Link>
+            <Link to="/feedback" className="hover:text-white">
+              Feedback
+            </Link>
+            <a
+              href="mailto:hello@myhandisagoose.example"
+              className="hover:text-white"
+            >
+              Contact
+            </a>
+          </div>
         </div>
+        <p className="border-t border-white/20 pt-6 text-xs text-white/70">
+          © {new Date().getFullYear()} My Hand Is A Goose. Not affiliated with
+          Sony Interactive Entertainment.
+        </p>
       </div>
     </footer>
   );

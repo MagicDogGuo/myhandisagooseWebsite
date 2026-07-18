@@ -10,15 +10,17 @@ export function LevelCard({ level }: LevelCardProps) {
   return (
     <Link
       to={`/levels/${level.levelId}`}
-      className="border-border/70 bg-card/60 hover:border-brand-teal/50 block rounded-lg border p-5 transition-colors"
+      className="bg-surface-card block rounded-md p-6 transition-shadow active:shadow-[0_4px_12px_rgba(0,0,0,0.16)] md:p-8"
     >
-      <p className="text-muted-foreground text-xs tracking-wide uppercase">
-        Level {level.levelId}
+      <p className="text-mute-light text-sm">Level {level.levelId}</p>
+      <h2 className="font-display mt-2 text-[22px] tracking-[0.1px]">
+        {level.title}
+      </h2>
+      <p className="text-body-light mt-3 text-base leading-normal">
+        {level.promptEn}
       </p>
-      <h2 className="font-display mt-1 text-xl tracking-tight">{level.title}</h2>
-      <p className="text-muted-foreground mt-3 text-sm italic">{level.promptEn}</p>
       {level.trainingFocus.length > 0 ? (
-        <ul className="text-muted-foreground mt-4 space-y-1 text-sm">
+        <ul className="text-mute-light mt-4 space-y-1 text-sm">
           {level.trainingFocus.slice(0, 2).map((focus) => (
             <li key={focus}>· {focus}</li>
           ))}

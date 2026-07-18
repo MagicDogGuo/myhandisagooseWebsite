@@ -38,26 +38,26 @@ export function LevelScreenshots({
 
   return (
     <section>
-      <h2 className="font-display text-2xl tracking-tight">Screenshots</h2>
-      <p className="text-muted-foreground mt-2 text-sm">
+      <h2 className="font-display text-[28px] tracking-[0.1px]">Screenshots</h2>
+      <p className="text-body-light mt-3 text-base leading-normal">
         Tap an image to open the lightbox. Placeholder art until final captures
         land.
       </p>
-      <ul className="mt-6 grid gap-3 sm:grid-cols-2">
+      <ul className="mt-6 grid gap-6 sm:grid-cols-2">
         {screenshots.map((src, index) => {
           const resolved = resolveScreenshotSrc(src);
           return (
             <li key={src}>
               <button
                 type="button"
-                className="border-border/70 bg-secondary/50 focus-visible:ring-ring group relative block w-full overflow-hidden rounded-lg border focus-visible:ring-2 focus-visible:outline-none"
+                className="bg-surface-card focus-visible:ring-primary group relative block w-full overflow-hidden rounded-md focus-visible:ring-2 focus-visible:outline-none"
                 onClick={() => setActiveIndex(index)}
                 aria-label={`Open screenshot ${index + 1} of ${levelTitle}`}
               >
                 <img
                   src={resolved}
                   alt={`${levelTitle} screenshot ${index + 1}`}
-                  className="aspect-video w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                  className="aspect-video w-full object-cover"
                   loading="lazy"
                 />
               </button>
@@ -74,7 +74,7 @@ export function LevelScreenshots({
           }
         }}
       >
-        <DialogContent className="max-w-4xl p-3 sm:p-4">
+        <DialogContent className="max-w-4xl rounded-lg p-3 sm:p-4">
           <DialogHeader className="sr-only">
             <DialogTitle>
               {levelTitle} screenshot{' '}
