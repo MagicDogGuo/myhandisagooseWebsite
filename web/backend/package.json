@@ -11,12 +11,13 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
-    "build": "tsc -p tsconfig.build.json",
+    "build": "tsc -p tsconfig.build.json && node scripts/copy-level-content.mjs",
     "start": "node dist/index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
+    "gray-matter": "^4.0.3",
     "helmet": "^8.0.0",
     "mongoose": "^9.7.4",
     "pino": "^10.3.1",
