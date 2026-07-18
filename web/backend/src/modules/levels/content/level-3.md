@@ -1,22 +1,22 @@
 ---
-title: 第三關：刷子推麵包
+title: 'Level 3: Brush-Push Bread'
 promptEn: Push the bread with the brush into the nest without dropping it.
 trainingFocus:
-  - 用刷子推動麵包前進
-  - 控制推力避免過頭
-  - 在窄路上維持麵包路線
+  - Push bread forward with the brush
+  - Control force so you do not overshoot
+  - Keep the loaf on path along narrow routes
 screenshots:
   - /placeholders/levels/level-3-1.png
   - /placeholders/levels/level-3-2.png
 pitfalls:
-  - title: 推太用力掉水
-    detail: 刷子一掃過頭，麵包會滾進水裡；改用短促輕推。
-  - title: 路線偏離
-    detail: 沒對準路徑會卡住障礙物，先對好方向再推。
+  - title: Pushing too hard
+    detail: A big brush sweep can roll bread into the water. Use short, light nudges instead.
+  - title: Off-path drift
+    detail: Bad aim wedges the loaf against obstacles. Line up the route before you push.
 ---
 
-## 關卡說明
+## Overview
 
-本關主軸是 **刷子推麵包**：用刷子把麵包推過路徑、送進巢裡通關。
+This level is about **brush-pushing bread**: nudge loaves along the path and into the nest to clear the stage.
 
-> 內容依 `web_plan.md` 整理；完整設計細節待補 `vr_goose_game_design.md`。
+> Content summarized from `web_plan.md`; fuller design notes will follow from the game design doc.

@@ -1,22 +1,22 @@
 ---
-title: 第一關：鉤子
+title: 'Level 1: The Hook'
 promptEn: Use the hook to pull bread closer, then put it in the nest.
 trainingFocus:
-  - 用鉤子拉近遠處麵包
-  - 鉤住與鬆開的時機
-  - 鉤子與徒手搬運的銜接
+  - Pull distant bread closer with the hook
+  - Time when to catch and when to release
+  - Hand off from hook pull to bare-hand carry
 screenshots:
   - /placeholders/levels/level-1-1.png
   - /placeholders/levels/level-1-2.png
 pitfalls:
-  - title: 鉤子操作翻車
-    detail: 鉤太早或太晚會空手；先對準麵包再拉。
-  - title: 拉太猛掉水
-    detail: 用力過猛會把麵包甩進水裡，改用短距拉近再徒手拿走。
+  - title: Hook mistiming
+    detail: Hooking too early or too late comes up empty. Aim at the bread before you pull.
+  - title: Yanking into the water
+    detail: Too much force flings bread into the pond. Use short pulls, then pick it up by hand.
 ---
 
-## 關卡說明
+## Overview
 
-引入 **鉤子** 工具：先把夠不到的麵包拉近，再送回巢裡。
+This level introduces the **hook**: pull unreachable bread closer, then carry it back to the nest.
 
-> 內容依 `web_plan.md` 整理；完整設計細節待補 `vr_goose_game_design.md`。
+> Content summarized from `web_plan.md`; fuller design notes will follow from the game design doc.

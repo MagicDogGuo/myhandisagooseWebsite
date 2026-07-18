@@ -1,22 +1,22 @@
 ---
-title: 第零關：開局擺麵包
+title: 'Level 0: Place the Bread'
 promptEn: Put 3 breads in the nest to pass the level.
 trainingFocus:
-  - 熟悉以手當鵝頭的抓取與放置
-  - 把麵包穩定送進巢裡
-  - 建立「偷麵包 → 回巢」的基本節奏
+  - Learn grab-and-place with your hand as a goose head
+  - Deliver bread into the nest without dropping it
+  - Build the steal-bread → return-to-nest rhythm
 screenshots:
   - /placeholders/levels/level-0-1.png
   - /placeholders/levels/level-0-2.png
 pitfalls:
-  - title: 麵包落水
-    detail: 麵包掉進水裡會失敗或需要重來；搬運時注意高度與角度。
-  - title: 巢口對不準
-    detail: 太急著甩進去容易彈出巢外，先對準再鬆手。
+  - title: Bread hits the water
+    detail: Dropping bread in the water fails the attempt or forces a retry. Watch height and angle while carrying.
+  - title: Missed the nest opening
+    detail: Flinging too hard often bounces bread out. Align first, then release.
 ---
 
-## 關卡說明
+## Overview
 
-這是教學關：學會用鵝頭（你的手）抓住麵包，並把 **3 個麵包** 放進巢裡通關。
+This is the tutorial level: use your goose head (your hand) to grab bread and place **3 loaves** in the nest to clear the stage.
 
-> 內容依 `web_plan.md` 整理；完整設計細節待補 `vr_goose_game_design.md`。
+> Content summarized from `web_plan.md`; fuller design notes will follow from the game design doc.
