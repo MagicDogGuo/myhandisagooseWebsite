@@ -1,7 +1,6 @@
 export interface LeaderboardEntry {
   rank: number;
   playerAlias: string;
-  levelId: number;
   clearTimeMs: number;
   dropCount: number;
 }

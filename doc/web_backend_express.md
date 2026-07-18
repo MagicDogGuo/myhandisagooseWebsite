@@ -335,7 +335,7 @@ StoreRating：僅後端呼叫；失敗回退快取；禁止洩漏 token。
 
 ### 6.6 Phase 2
 
-`POST /scores`、`GET /leaderboard/:levelId` — 本階段不掛載。
+`POST /scores`（整局 `{ clearTimeMs, dropCount?, clientToken }`）、`GET /leaderboard`（全遊戲排行，非依 level）— 本階段不掛載。
 
 ---
 

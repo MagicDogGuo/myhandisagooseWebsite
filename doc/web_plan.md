@@ -46,6 +46,7 @@
 - 遊戲介紹：核心概念（手當鵝頭、偷麵包、抓小鵝回巢）、特色截圖／影片
 - 下載連結：Meta Store 連結、QR Code
 - **Demo 排行榜**：通關時間、掉水次數 — 全部假資料，UI 標示「Demo data」
+  - 指標為**整局總數**（所有關卡加總），非單關；UI 不顯示 Level
   - 目的：先把排行榜 UI 做出來，Phase 2 直接換資料來源
 - 商店評分顯示（後端非官方 GraphQL 抓取＋快取）
 
@@ -267,10 +268,10 @@ web/
 
 遊戲之後開放「完成時間」上傳時：
 
-1. **隱私政策更新**：明列上傳項目（關卡 ID、通關時間、匿名玩家識別），並在遊戲內取得同意（opt-in）
+1. **隱私政策更新**：明列上傳項目（整局通關時間、整局掉水次數、匿名玩家識別），並在遊戲內取得同意（opt-in）
 2. **API**（後端文件已預留 schema）：
-   - `POST /api/v1/scores` — 遊戲上傳 `{ levelId, clearTimeMs, dropCount?, clientToken }`
-   - `GET /api/v1/leaderboard/:levelId` — 網站讀排行
+   - `POST /api/v1/scores` — 遊戲上傳 `{ clearTimeMs, dropCount?, clientToken }`（整局總數，非單關）
+   - `GET /api/v1/leaderboard` — 網站讀全遊戲排行（Clear time／Fewest drops）
 3. **前端**：Landing 的 Demo 排行榜元件換資料來源即可（元件介面在前端文件已定義為與真實 API 同型別）
 4. 防作弊最低限度：clientToken 簽章、伺服器端合理性檢查（時間下限）
 

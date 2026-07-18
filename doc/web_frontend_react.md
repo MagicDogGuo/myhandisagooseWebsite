@@ -161,13 +161,15 @@ const HomePage = lazy(() =>
 
 - shadcn `Button`／`Card`／`Tabs`
 - Demo 排行假資料，型別與 Phase 2 相同；標示 `Demo data`
+- **全遊戲總數**：`clearTimeMs`／`dropCount` 為整局（所有關卡加總），**不是**單關；UI 不顯示 Level 欄
 
 ```ts
 export interface LeaderboardEntry {
   rank: number;
   playerAlias: string;
-  levelId: number;
+  /** Whole-game clear time (all levels) */
   clearTimeMs: number;
+  /** Whole-game drop count (all levels) */
   dropCount: number;
 }
 ```

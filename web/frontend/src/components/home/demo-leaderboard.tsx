@@ -33,12 +33,11 @@ function LeaderboardTable({
 }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[28rem] text-left text-xs sm:text-sm">
+      <table className="w-full min-w-[22rem] text-left text-xs sm:text-sm">
         <thead>
           <tr className="label-chrome text-ink-soft border-b border-chrome-indigo/40">
             <th className="px-2 py-2">#</th>
             <th className="px-2 py-2">Player</th>
-            <th className="px-2 py-2">Level</th>
             <th className="px-2 py-2">
               {metric === 'time' ? 'Clear time' : 'Drops'}
             </th>
@@ -47,16 +46,13 @@ function LeaderboardTable({
         <tbody>
           {entries.map((entry, index) => (
             <tr
-              key={`${entry.playerAlias}-${entry.levelId}-${metric}`}
+              key={`${entry.playerAlias}-${metric}`}
               className="animate-row border-b border-chrome-indigo/25 last:border-0"
               style={{ animationDelay: `${index * 40}ms` }}
             >
               <td className="px-2 py-2.5 font-bold text-ink">{index + 1}</td>
               <td className="px-2 py-2.5 font-semibold text-ink-soft">
                 {entry.playerAlias}
-              </td>
-              <td className="px-2 py-2.5 text-muted-indigo">
-                Lv.{entry.levelId}
               </td>
               <td className="px-2 py-2.5 font-bold tabular-nums text-ink">
                 {metric === 'time'
@@ -87,8 +83,9 @@ export function DemoLeaderboard() {
             <Badge>Demo data</Badge>
           </div>
           <CardDescription>
-            Clear times and drop counts use placeholder scores. Phase 2 will
-            connect the live upload API without changing this layout.
+            Whole-game clear times and drop totals (all levels). Placeholder
+            scores for now — Phase 2 will connect the live upload API without
+            changing this layout.
           </CardDescription>
         </CardHeader>
         <CardContent>

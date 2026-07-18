@@ -156,7 +156,7 @@ chore(frontend): scaffold vite react with shadcn and lazy routes
 - **讀取規格：** `web_frontend_react.md` §2.3、§3.1；`web_plan.md` Landing；[`Nintendodesign.md`](Nintendodesign.md)
 - **做：**
   - Navbar／Footer（carbon 指揮層語彙）
-  - Home：Hero、特色、Demo 排行榜（假資料 + Demo data 徽章）；視覺對齊 Nintendo chrome（bevel 面板、暖色 CTA）
+  - Home：Hero、特色、Demo 排行榜（假資料 + Demo data 徽章；Clear time／Fewest drops 為**整局總數**，無 Level 欄）；視覺對齊 Nintendo chrome（bevel 面板、暖色 CTA）
   - 可選：首頁顯示關卡摘要（打 `GET /levels`）
   - 商店 CTA 外連（URL 可先 placeholder）
 - **不要做：** 真實評分、回饋表單；不要照抄 Nintendo／Mario 商標素材
