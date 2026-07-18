@@ -2,7 +2,7 @@
 
 > **對應文件：** [`web_plan.md`](web_plan.md)（總計畫）、[`web_frontend_react.md`](web_frontend_react.md)（前端）  
 > **對齊 Cursor rule：** `nodebestpractices.mdc`（Yoni Goldberg）+ 專案 Service config 注入規範  
-> **文件版本：** v1.5　**最後更新：** 2026-07-18
+> **文件版本：** v1.6　**最後更新：** 2026-07-19
 
 ---
 
@@ -14,7 +14,7 @@
 | 框架 | Express 4 | |
 | DB | MongoDB Atlas（M0）+ mongoose | |
 | 驗證 | zod（請求 **與** AppConfig） | Fail-fast |
-| Email | SendGrid 免費額度 | |
+| Email | Resend 免費額度 | |
 | 商店評分 | 非官方 `graph.oculus.com/graphql` | 後端＋快取 |
 | Rate limit | express-rate-limit | |
 | 安全 | helmet、cors、eslint-plugin-security（建議） | |
@@ -50,7 +50,7 @@ Constructor 參數 **camelCase**；不可變模組常數才用 `SCREAMING_SNAKE_
 // src/config/appConfig.ts
 import { z } from 'zod';
 
-const sendgridSchema = z.object({
+const resendSchema = z.object({
   apiKey: z.string().min(1),
   fromEmail: z.string().email(),
   notifyEmail: z.string().email(),
@@ -76,7 +76,7 @@ const appConfigSchema = z.object({
   corsOrigin: z.string().min(1),
   mongoUri: z.string().min(1),
   publicAssetBaseUrl: z.string().url(),
-  sendgrid: sendgridSchema,
+  resend: resendSchema,
   vote: voteSchema,
   storeRating: storeRatingSchema,
 });
@@ -90,9 +90,9 @@ function readRawConfig() {
     corsOrigin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
     mongoUri: process.env.MONGO_URI ?? '',
     publicAssetBaseUrl: process.env.PUBLIC_ASSET_BASE_URL ?? 'http://localhost:5173',
-    sendgrid: {
-      apiKey: process.env.SENDGRID_API_KEY ?? '',
-      fromEmail: process.env.SENDGRID_FROM_EMAIL ?? '',
+    resend: {
+      apiKey: process.env.RESEND_API_KEY ?? '',
+      fromEmail: process.env.RESEND_FROM_EMAIL ?? '',
       notifyEmail: process.env.FEEDBACK_NOTIFY_EMAIL ?? '',
     },
     vote: {
@@ -123,7 +123,7 @@ export function loadConfig(): AppConfig {
 // development：可用較寬鬆 schema 或 .env.example 填齊假值以便本機啟動
 ```
 
-正式環境必須有完整 SendGrid／Oculus／Mongo 等；`test` 環境測試可注入假 `AppConfig` 物件而不呼叫 `loadConfig()`。
+正式環境必須有完整 Resend／Oculus／Mongo 等；`test` 環境測試可注入假 `AppConfig` 物件而不呼叫 `loadConfig()`。
 
 ---
 
@@ -323,7 +323,7 @@ export class AppError extends Error {
 |--------|------|------|
 | GET | `/levels` | 列表 |
 | GET | `/levels/:levelId` | `LevelDoc` |
-| POST | `/feedback` | rate limit → honeypot → zod → Mongo → SendGrid（失敗不擋 201） |
+| POST | `/feedback` | rate limit → honeypot → zod → Mongo → Resend（失敗不擋 201） |
 | GET | `/polls` | 議題＋票數＋`myVote` |
 | POST | `/polls/:pollId/vote` | 防刷 cookie + unique + IP limit |
 | GET | `/press/assets` | 清單 |
@@ -423,7 +423,7 @@ M6 workflow：lint／typecheck／test／build／`npm audit` → scp／ssh 或 SS
 ### 10.3 EC2／nginx
 
 - t3.micro／t4g.micro；HTTPS；反向代理 gzip／TLS（對齊 5.3）
-- `/etc/goose-web.env`：`MONGO_URI`、SendGrid、Oculus…  
+- `/etc/goose-web.env`：`MONGO_URI`、Resend、Oculus…  
 - Atlas allowlist：開發 IP + EC2 Elastic IP
 
 ### 10.4 環境變數範例
@@ -434,8 +434,8 @@ PORT=3001
 CORS_ORIGIN=https://www.example.com
 MONGO_URI=mongodb+srv://.../goose_web
 PUBLIC_ASSET_BASE_URL=https://www.example.com
-SENDGRID_API_KEY=
-SENDGRID_FROM_EMAIL=noreply@example.com
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=onboarding@resend.dev
 FEEDBACK_NOTIFY_EMAIL=dev@example.com
 VOTE_IP_HASH_SECRET=
 META_APP_ID=
