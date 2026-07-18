@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import { ApiError } from '@/api/client';
 import { fetchLevelById } from '@/api/levels';
+import { ChromeShell } from '@/components/layout/chrome-shell';
 import { LevelPitfalls } from '@/components/levels/level-pitfalls';
 import { LevelScreenshots } from '@/components/levels/level-screenshots';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -34,84 +35,92 @@ export function LevelDetailPage() {
     (error instanceof ApiError && error.status === 404);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-12 sm:px-6 sm:py-16">
-      <Link
-        to="/levels"
-        className="text-muted-foreground text-sm underline-offset-4 hover:underline"
-      >
-        ← All levels
-      </Link>
+    <ChromeShell>
+      <main className="px-3 py-6 sm:px-5 sm:py-8">
+        <Link
+          to="/levels"
+          className="label-chrome text-signal inline-flex items-center gap-1 hover:brightness-110"
+        >
+          <span aria-hidden>‹</span> All levels
+        </Link>
 
-      {levelId === null ? (
-        <p className="mt-8" role="alert">
-          Invalid level id.
-        </p>
-      ) : null}
+        {levelId === null ? (
+          <p className="mt-6 text-sm font-bold text-primary" role="alert">
+            Invalid level id.
+          </p>
+        ) : null}
 
-      {isPending && levelId !== null ? (
-        <div className="mt-8 space-y-4">
-          <Skeleton className="h-10 w-2/3" />
-          <Skeleton className="h-6 w-full" />
-          <Skeleton className="h-40 w-full" />
-        </div>
-      ) : null}
+        {isPending && levelId !== null ? (
+          <div className="mt-6 space-y-3">
+            <Skeleton className="h-10 w-2/3 rounded-sm" />
+            <Skeleton className="h-6 w-full rounded-sm" />
+            <Skeleton className="h-40 w-full rounded-sm" />
+          </div>
+        ) : null}
 
-      {notFound && levelId !== null ? (
-        <p className="mt-8" role="alert">
-          Level not found. Back to{' '}
-          <Link to="/levels" className="underline underline-offset-4">
-            the list
-          </Link>
-          .
-        </p>
-      ) : null}
+        {notFound && levelId !== null ? (
+          <p className="mt-6 text-sm" role="alert">
+            Level not found. Back to{' '}
+            <Link to="/levels" className="font-bold text-signal underline">
+              the list
+            </Link>
+            .
+          </p>
+        ) : null}
 
-      {isError && !notFound ? (
-        <p className="text-muted-foreground mt-8 text-sm" role="alert">
-          Could not load this level. Please try again later.
-        </p>
-      ) : null}
+        {isError && !notFound ? (
+          <p className="text-ink-soft mt-6 text-xs sm:text-sm" role="alert">
+            Could not load this level. Please try again later.
+          </p>
+        ) : null}
 
-      {data ? (
-        <article className="mt-8 space-y-12">
-          <header>
-            <p className="text-muted-foreground text-sm tracking-wide uppercase">
-              Level {data.levelId}
-            </p>
-            <h1 className="font-display mt-2 text-4xl tracking-tight">
-              {data.title}
-            </h1>
-            <blockquote className="border-brand-teal/40 text-foreground mt-6 border-l-2 pl-4 text-lg italic">
-              {data.promptEn}
-            </blockquote>
-          </header>
+        {data ? (
+          <article className="mt-5 space-y-5">
+            <header className="bevel-plate overflow-hidden rounded-sm">
+              <div className="section-label-bar">Level {data.levelId}</div>
+              <div className="bg-lavender/70 px-4 py-5 sm:px-5">
+                <h1 className="font-display text-boxart text-3xl leading-none sm:text-4xl">
+                  {data.title}
+                </h1>
+                <blockquote className="mt-4 border-l-4 border-signal pl-3 text-sm font-bold italic text-ink">
+                  {data.promptEn}
+                </blockquote>
+              </div>
+            </header>
 
-          <section>
-            <h2 className="font-display text-2xl tracking-tight">
-              Training focus
-            </h2>
-            <ul className="mt-4 space-y-2">
-              {data.trainingFocus.map((focus) => (
-                <li
-                  key={focus}
-                  className="text-muted-foreground before:text-brand-teal flex gap-2 before:content-['•']"
-                >
-                  <span>{focus}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
+            <section className="overflow-hidden rounded-sm">
+              <div className="section-label-bar">Training focus</div>
+              <ul className="bevel-inset space-y-2 px-4 py-4 sm:px-5">
+                {data.trainingFocus.map((focus) => (
+                  <li
+                    key={focus}
+                    className="text-ink-soft flex gap-2 text-xs sm:text-sm"
+                  >
+                    <span className="text-signal" aria-hidden>
+                      ›
+                    </span>
+                    <span>{focus}</span>
+                  </li>
+                ))}
+              </ul>
+            </section>
 
-          <SafeMarkdown content={data.bodyMd} />
+            <section className="overflow-hidden rounded-sm">
+              <div className="section-label-bar">Guide</div>
+              <div className="bevel-inset px-4 py-4 text-xs leading-relaxed sm:px-5 sm:text-sm [&_a]:font-bold [&_a]:text-ink-soft [&_h2]:label-chrome [&_h2]:mt-4 [&_h2]:mb-2 [&_h3]:label-chrome [&_h3]:mt-3 [&_h3]:mb-1 [&_li]:my-1 [&_p]:my-2 [&_ul]:my-2 [&_ul]:list-disc [&_ul]:pl-5">
+                <SafeMarkdown content={data.bodyMd} />
+              </div>
+            </section>
 
-          <LevelPitfalls pitfalls={data.pitfalls} />
+            <LevelPitfalls pitfalls={data.pitfalls} />
 
-          <LevelScreenshots
-            screenshots={data.screenshots}
-            levelTitle={data.title}
-          />
-        </article>
-      ) : null}
-    </main>
+            <LevelScreenshots
+              screenshots={data.screenshots}
+              levelTitle={data.title}
+            />
+          </article>
+        ) : null}
+      </main>
+    </ChromeShell>
   );
 }

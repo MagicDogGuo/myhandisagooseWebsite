@@ -18,23 +18,31 @@ const FEATURES = [
 
 export function HomeFeatures() {
   return (
-    <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-20">
-      <h2 className="font-display text-3xl tracking-tight sm:text-4xl">
-        Why players honk
-      </h2>
-      <p className="text-muted-foreground mt-3 max-w-2xl">
-        A short VR physics comedy about bad decisions with baked goods.
-      </p>
-      <ul className="mt-10 grid gap-8 sm:grid-cols-3">
-        {FEATURES.map((feature) => (
-          <li key={feature.title}>
-            <h3 className="font-display text-xl">{feature.title}</h3>
-            <p className="text-muted-foreground mt-2 text-sm leading-relaxed">
-              {feature.detail}
-            </p>
-          </li>
-        ))}
-      </ul>
+    <section className="border-b border-chrome-indigo px-3 py-6 sm:px-5 sm:py-8">
+      <div className="section-label-bar rounded-t-sm">Why players honk</div>
+      <div className="bevel-inset rounded-b-sm px-4 py-4 sm:px-5">
+        <p className="text-ink-soft max-w-2xl text-xs leading-relaxed sm:text-sm">
+          A short VR physics comedy about bad decisions with baked goods.
+        </p>
+        <ul className="mt-5 grid gap-3 sm:grid-cols-3">
+          {FEATURES.map((feature) => (
+            <li key={feature.title} className="bevel-plate-raised rounded-sm p-3">
+              <h3 className="label-chrome text-ink flex items-start gap-2">
+                <span
+                  className="mt-0.5 inline-flex size-[18px] shrink-0 items-center justify-center rounded-xs bg-signal text-[10px] text-white"
+                  aria-hidden
+                >
+                  ›
+                </span>
+                {feature.title}
+              </h3>
+              <p className="text-ink-soft mt-2 text-xs leading-relaxed">
+                {feature.detail}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

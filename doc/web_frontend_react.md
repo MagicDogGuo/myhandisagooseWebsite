@@ -112,6 +112,7 @@ web/frontend/
 | 整體感覺 | 頁面像組裝好的主機面板：bevel 金屬板、chamfer 切角，不是現代卡片牆 |
 | 色票 | 冷色 periwinkle chrome + carbon 指揮層；暖色（amber／signal orange）只做「前進／操作」訊號 |
 | 字級處理 | 結構標籤 uppercase + tracking；hero 字用 outline + hard drop shadow（box-art） |
+| 字級尺寸 | 依 `Nintendodesign.md` Typography token，本站再 × **1.2**（`--type-scale`）以利現代螢幕閱讀 |
 | 深度 | 硬 bevel／切角，不用模糊 soft shadow |
 | 密度 | 模組緊貼、縫隙當結構縫，避免過大留白 |
 
@@ -120,6 +121,7 @@ web/frontend/
 - 仍遵守本規格的 **手機優先／響應式**（`Nintendodesign.md` 的「現代 port」建議：窄螢幕堆疊右欄、nav 收合）
 - 品牌換成「鵝頭偷麵包」；色票與 bevel 語彙可沿用，Mario／Nintendo 商標素材不可用
 - shadcn 元件可當互動 primitive，但外觀 token（色、圓角、bevel）應對齊該設計規範，勿維持預設「圓角卡片 + soft shadow」風格
+- **字級：** 階層／用途對齊設計文件；絕對像素以 `--type-scale: 1.2` 放大（例：body 12→14.4px、label 11→13.2px）
 
 實作 Tailwind／CSS 變數時，優先對照 `Nintendodesign.md` 的 Colors、Typography、Shapes、Do's and Don'ts。
 

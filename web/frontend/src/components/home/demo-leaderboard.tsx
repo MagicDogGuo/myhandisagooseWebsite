@@ -33,13 +33,13 @@ function LeaderboardTable({
 }) {
   return (
     <div className="overflow-x-auto">
-      <table className="w-full min-w-[28rem] text-left text-sm">
+      <table className="w-full min-w-[28rem] text-left text-xs sm:text-sm">
         <thead>
-          <tr className="text-muted-foreground border-b">
-            <th className="px-2 py-2 font-medium">#</th>
-            <th className="px-2 py-2 font-medium">Player</th>
-            <th className="px-2 py-2 font-medium">Level</th>
-            <th className="px-2 py-2 font-medium">
+          <tr className="label-chrome text-ink-soft border-b border-chrome-indigo/40">
+            <th className="px-2 py-2">#</th>
+            <th className="px-2 py-2">Player</th>
+            <th className="px-2 py-2">Level</th>
+            <th className="px-2 py-2">
               {metric === 'time' ? 'Clear time' : 'Drops'}
             </th>
           </tr>
@@ -48,15 +48,17 @@ function LeaderboardTable({
           {entries.map((entry, index) => (
             <tr
               key={`${entry.playerAlias}-${entry.levelId}-${metric}`}
-              className="animate-row border-border/60 border-b last:border-0"
+              className="animate-row border-b border-chrome-indigo/25 last:border-0"
               style={{ animationDelay: `${index * 40}ms` }}
             >
-              <td className="px-2 py-3 font-medium">{index + 1}</td>
-              <td className="px-2 py-3">{entry.playerAlias}</td>
-              <td className="text-muted-foreground px-2 py-3">
+              <td className="px-2 py-2.5 font-bold text-ink">{index + 1}</td>
+              <td className="px-2 py-2.5 font-semibold text-ink-soft">
+                {entry.playerAlias}
+              </td>
+              <td className="px-2 py-2.5 text-muted-indigo">
                 Lv.{entry.levelId}
               </td>
-              <td className="px-2 py-3 tabular-nums">
+              <td className="px-2 py-2.5 font-bold tabular-nums text-ink">
                 {metric === 'time'
                   ? formatClearTime(entry.clearTimeMs)
                   : entry.dropCount}
@@ -76,17 +78,13 @@ export function DemoLeaderboard() {
   return (
     <section
       id="leaderboard"
-      className="mx-auto max-w-6xl scroll-mt-20 px-4 py-16 sm:px-6 sm:py-20"
+      className="scroll-mt-24 border-b border-chrome-indigo px-3 py-6 sm:px-5 sm:py-8"
     >
-      <Card className="border-border/70 bg-card/90 shadow-none">
-        <CardHeader className="gap-3">
-          <div className="flex flex-wrap items-center gap-3">
-            <CardTitle className="font-display text-2xl sm:text-3xl">
-              Leaderboard
-            </CardTitle>
-            <Badge className="border-brand-gold/40 bg-brand-gold/20 text-brand-ink">
-              Demo data
-            </Badge>
+      <Card>
+        <CardHeader>
+          <div className="section-label-bar flex flex-wrap items-center gap-3">
+            <CardTitle>Leaderboard</CardTitle>
+            <Badge>Demo data</Badge>
           </div>
           <CardDescription>
             Clear times and drop counts use placeholder scores. Phase 2 will

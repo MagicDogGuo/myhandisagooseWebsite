@@ -10,17 +10,22 @@ export function LevelCard({ level }: LevelCardProps) {
   return (
     <Link
       to={`/levels/${level.levelId}`}
-      className="border-border/70 bg-card/60 hover:border-brand-teal/50 block rounded-lg border p-5 transition-colors"
+      className="bevel-plate-raised hover:brightness-105 block rounded-sm p-4 transition-[filter]"
     >
-      <p className="text-muted-foreground text-xs tracking-wide uppercase">
-        Level {level.levelId}
-      </p>
-      <h2 className="font-display mt-1 text-xl tracking-tight">{level.title}</h2>
-      <p className="text-muted-foreground mt-3 text-sm italic">{level.promptEn}</p>
+      <p className="label-chrome text-ink-soft">Level {level.levelId}</p>
+      <h2 className="mt-1 text-base font-bold tracking-tight text-ink">
+        {level.title}
+      </h2>
+      <p className="text-ink-soft mt-3 text-xs italic">{level.promptEn}</p>
       {level.trainingFocus.length > 0 ? (
-        <ul className="text-muted-foreground mt-4 space-y-1 text-sm">
+        <ul className="text-ink-soft mt-3 space-y-1 text-xs">
           {level.trainingFocus.slice(0, 2).map((focus) => (
-            <li key={focus}>· {focus}</li>
+            <li key={focus} className="flex gap-2">
+              <span className="text-signal" aria-hidden>
+                ›
+              </span>
+              {focus}
+            </li>
           ))}
         </ul>
       ) : null}

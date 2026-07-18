@@ -48,16 +48,23 @@ type ErrorFallbackProps = {
 
 export function ErrorFallback({ onRetry }: ErrorFallbackProps) {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-4 p-6 text-center">
-      <h1 className="text-2xl font-semibold">Something went wrong</h1>
-      <p className="text-muted-foreground max-w-md text-sm">
-        Please try again. If the problem continues, refresh the page.
-      </p>
-      {onRetry ? (
-        <Button type="button" onClick={onRetry}>
-          Try again
-        </Button>
-      ) : null}
+    <div className="flex min-h-svh flex-col items-center justify-center gap-4 bg-canvas p-6 text-center">
+      <div className="bevel-plate w-full max-w-md overflow-hidden rounded-sm">
+        <div className="section-label-bar">System error</div>
+        <div className="bevel-inset px-5 py-6">
+          <h1 className="label-chrome text-ink text-base">
+            Something went wrong
+          </h1>
+          <p className="text-ink-soft mt-2 text-xs sm:text-sm">
+            Please try again. If the problem continues, refresh the page.
+          </p>
+          {onRetry ? (
+            <Button type="button" className="mt-5" onClick={onRetry}>
+              Try again
+            </Button>
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 }

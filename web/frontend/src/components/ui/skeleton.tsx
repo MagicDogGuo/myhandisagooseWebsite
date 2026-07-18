@@ -6,7 +6,10 @@ function Skeleton({ className, ...props }: ComponentProps<'div'>) {
   return (
     <div
       data-slot="skeleton"
-      className={cn('bg-accent animate-pulse rounded-md', className)}
+      className={cn(
+        'animate-pulse rounded-sm border border-chrome-indigo/40 bg-sky/70',
+        className,
+      )}
       {...props}
     />
   );

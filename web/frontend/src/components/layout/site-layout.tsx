@@ -5,12 +5,14 @@ import { SiteHeader } from '@/components/layout/site-header';
 
 export function SiteLayout() {
   return (
-    <div className="flex min-h-svh flex-col">
+    <div className="flex min-h-svh flex-col bg-canvas">
       <SiteHeader />
       <div className="flex-1">
         <Outlet />
       </div>
-      <SiteFooter />
+      <div className="px-2 pb-4 sm:px-4">
+        <SiteFooter />
+      </div>
     </div>
   );
 }
