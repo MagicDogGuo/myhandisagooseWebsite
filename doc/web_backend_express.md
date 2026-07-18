@@ -2,7 +2,7 @@
 
 > **對應文件：** [`web_plan.md`](web_plan.md)（總計畫）、[`web_frontend_react.md`](web_frontend_react.md)（前端）  
 > **對齊 Cursor rule：** `nodebestpractices.mdc`（Yoni Goldberg）+ 專案 Service config 注入規範  
-> **文件版本：** v1.4　**最後更新：** 2026-07-18
+> **文件版本：** v1.5　**最後更新：** 2026-07-18
 
 ---
 
@@ -127,48 +127,70 @@ export function loadConfig(): AppConfig {
 
 ---
 
-## 3. 專案結構（業務模組 + 分層）
+## 3. 專案結構（Composition Root + Controller／Service／Repository）
 
 對齊 nodebestpractices **1.1 依業務切分**、**1.2 分層**（entry／domain／data）。
+
+**架構硬性約定：**
+
+1. **`src/index.ts` = composition root**  
+   手動組裝 Database、Cache、各 Service → Controller；再把 Controllers 傳入 `createApp`；負責 `listen` 與優雅關閉。  
+2. **中央路由表**（在 `app.ts`）：全部用 `app.get`／`app.post`／… 註冊；**沒有**獨立 `*-router.ts`、也**不要** `express.Router()` 分檔掛載。  
+3. **Controller** 只處理 HTTP（parse／呼叫 Service／對應狀態碼）；**不傳** `req`／`res` 進 Service。  
+4. **Service** 純業務；丟 `AppError`。  
+5. **Repository**（或 Cache 抽象）碰 mongoose／檔案系統／外部 API。  
+6. **型別：** 跨模組共用放 `src/types/`；模組專用放該模組的 `types/`（勿把業務邏輯塞進 type 檔）。
 
 ```
 web/backend/
 ├─ src/
-│  ├─ index.ts                 # loadConfig、連 DB、listen、優雅關閉
-│  ├─ app.ts                   # createApp(deps) — 供 supertest，不 listen
+│  ├─ index.ts                 # ★ composition root：config → DB／Cache → Service → Controller → createApp → listen／shutdown
+│  ├─ app.ts                   # createApp(deps) — middleware + 中央路由表；供 supertest，不 listen
 │  ├─ config/appConfig.ts
+│  ├─ types/                   # ★ 跨模組共用型別（API DTO、共用別名）
+│  │  └─ …
 │  ├─ errors/
 │  │  ├─ app-error.ts          # ★ extends Error
 │  │  └─ error-handler.ts      # ★ 中央處理（log／是否崩潰），middleware 只轉呼叫
 │  ├─ db/
 │  │  ├─ mongoose.ts
 │  │  └─ models/
+│  ├─ cache/                   # 需要時（如 store-rating TTL）；由 index 組裝後注入 Service
 │  ├─ modules/
 │  │  ├─ levels/
-│  │  │  ├─ levels-router.ts       # entry（HTTP）
+│  │  │  ├─ types/                 # ★ 模組專用型別（如 LevelDoc）
+│  │  │  ├─ levels-controller.ts   # entry（HTTP only）
 │  │  │  ├─ levels-service.ts      # domain
 │  │  │  ├─ levels-repository.ts   # data-access（讀 md／快取）
 │  │  │  └─ content/
 │  │  ├─ feedback/
-│  │  │  ├─ feedback-router.ts
+│  │  │  ├─ types/
+│  │  │  ├─ feedback-controller.ts
 │  │  │  ├─ feedback-service.ts
 │  │  │  ├─ feedback-repository.ts
 │  │  │  ├─ feedback-mail-service.ts
 │  │  │  └─ feedback-schema.ts
 │  │  ├─ polls/
-│  │  │  ├─ polls-router.ts
+│  │  │  ├─ types/
+│  │  │  ├─ polls-controller.ts
 │  │  │  ├─ polls-service.ts
 │  │  │  ├─ polls-repository.ts
 │  │  │  └─ vote-guard.ts
 │  │  ├─ press/
+│  │  │  ├─ types/
+│  │  │  ├─ press-controller.ts
+│  │  │  ├─ press-service.ts
+│  │  │  └─ …
 │  │  ├─ site-meta/
-│  │  │  ├─ site-meta-router.ts
+│  │  │  ├─ types/
+│  │  │  ├─ site-meta-controller.ts
 │  │  │  └─ store-rating-service.ts
 │  │  ├─ health/
-│  │  │  └─ health-router.ts   # ★ GET /health
+│  │  │  └─ health-controller.ts   # ★ GET /health（型別極少可不建 types/）
 │  │  └─ scores/               # Phase 2
 │  └─ middleware/
 │     ├─ express-error-middleware.ts  # 呼叫 error-handler
+│     ├─ async-handler.ts
 │     └─ rate-limiters.ts
 ├─ .env.example
 ├─ vitest.config.ts
@@ -176,11 +198,57 @@ web/backend/
 └─ package.json
 ```
 
-規則：
+### 3.1 Composition root 示意（`index.ts`）
 
-- **Router** 只做 parse／呼叫 service／對應 HTTP 狀態；不傳 `req`/`res` 進 service
-- **Service** 純邏輯；丟 `AppError`
-- **Repository** 碰 mongoose／檔案系統
+```ts
+// src/index.ts（示意）
+const config = loadConfig();
+const logger = createLogger(config.nodeEnv);
+await connectMongo(config.mongoUri);
+
+// Database / Cache / Service → Controller（手動組裝）
+const levelsRepository = new LevelsRepository();
+const levelsService = new LevelsService(levelsRepository);
+const levelsController = new LevelsController(levelsService);
+
+const healthController = new HealthController();
+// …feedback / polls / press / siteMeta 同理
+
+const app = createApp({
+  config,
+  logger,
+  controllers: {
+    health: healthController,
+    levels: levelsController,
+    // …
+  },
+});
+
+const server = app.listen(config.port, …);
+// SIGTERM／SIGINT／unhandledRejection → shutdown（見 §9）
+```
+
+測試可略過 `index.ts`：直接 `new Service(fakeRepo)`／`new Controller(fakeService)`，再 `createApp({ …controllers })` 給 supertest。
+
+### 3.2 中央路由表示意（`app.ts`）
+
+```ts
+// src/app.ts（示意）— 唯一註冊 HTTP 路徑的地方
+export function createApp(deps: CreateAppDeps): Express {
+  const { config, logger, controllers } = deps;
+  const app = express();
+  // helmet / cors / json / rate-limiters …
+
+  app.get('/health', asyncHandler((req, res) => controllers.health.getHealth(req, res)));
+  app.get('/api/v1/levels', asyncHandler((req, res) => controllers.levels.list(req, res)));
+  app.get('/api/v1/levels/:levelId', asyncHandler((req, res) => controllers.levels.getById(req, res)));
+  // app.post('/api/v1/feedback', …)
+  // …
+
+  app.use(createExpressErrorMiddleware(createErrorHandler(logger)));
+  return app;
+}
+```
 
 上線前再加：`.github/workflows/ci.yml`、`deploy-backend.yml`。
 
@@ -211,7 +279,7 @@ export class AppError extends Error {
 ### 4.2 中央 `errorHandler`（對齊 2.4）
 
 - 統一 log（pino）、決定回應 body、是否標記崩潰  
-- Express middleware **只** `next(err)` → 轉呼叫此物件，不把業務判斷散在各 route
+- Express middleware **只** `next(err)` → 轉呼叫此物件，不把業務判斷散在各 Controller
 
 ### 4.3 API 錯誤格式
 
@@ -293,8 +361,8 @@ StoreRating：僅後端呼叫；失敗回退快取；禁止洩漏 token。
 
 ### 8.2 自動化
 
-- 單元：vote-guard、services、store-rating（GraphQL fixture）、**AppError／config parse**
-- 整合：supertest 打 `createApp`；假 config；每測自備資料（對齊 4.5）
+- 單元：vote-guard、services、controllers（mock service）、store-rating（GraphQL fixture）、**AppError／config parse**
+- 整合：supertest 打 `createApp({ controllers })`；假 config／假 controller 或真實 service + 假 repo；每測自備資料（對齊 4.5）
 - 錯誤流：400／409／429／500 皆測（對齊 2.8、4.13）
 - 測試 listen **隨機 port** 或不 listen（對齊 4.12）
 
@@ -302,12 +370,14 @@ StoreRating：僅後端呼叫；失敗回退快取；禁止洩漏 token。
 
 ## 9. 程序生命週期（對齊 2.6、2.10、5.15、5.18）
 
-`index.ts`：
+`index.ts`（composition root + 生命週期）：
 
 1. `loadConfig()`（失敗 exit 1）
-2. `connectMongo`
-3. `const server = app.listen(config.port)`
-4. 註冊：
+2. `connectMongo`（及必要時初始化 Cache）
+3. 手動組裝 Repository／Cache → Service → Controller
+4. `createApp({ config, logger, controllers })`（中央路由表在此註冊，見 §3.2）
+5. `const server = app.listen(config.port)`
+6. 註冊：
 
 ```ts
 process.on('unhandledRejection', (reason) => {
@@ -382,7 +452,7 @@ OCULUS_GRAPH_ENDPOINT=https://graph.oculus.com/graphql
 | 實踐 | 本規格 |
 |------|--------|
 | 1.1 業務元件 | `modules/*` |
-| 1.2 三層 | router／service／repository |
+| 1.2 三層 | controller／service／repository；`index.ts` composition root；`app.ts` 中央路由表（無獨立 Router 檔） |
 | 1.4 Config | zod fail-fast + 注入 |
 | 2.2／2.3 AppError | §4 |
 | 2.4 中央錯誤處理 | `errors/error-handler.ts` |
@@ -404,6 +474,8 @@ OCULUS_GRAPH_ENDPOINT=https://graph.oculus.com/graphql
 
 - [ ] `loadConfig()` 缺必填會拒絕啟動
 - [ ] Service 皆 config 注入；`process.env` 僅在 appConfig
+- [ ] `index.ts` 為 composition root；無獨立 `*-router.ts`；路由僅在 `app.ts` 用 `app.get`／`post`／… 註冊
+- [ ] Controller 只處理 HTTP；業務在 Service
 - [ ] AppError + 中央 error handler；錯誤碼表正確
 - [ ] `GET /health` 可探活
 - [ ] SIGTERM／unhandledRejection 有處理

@@ -1,0 +1,10 @@
+方法一：使用 Docker 运行（最推荐，干净快捷）
+
+如果你的电脑上安装了 Docker Desktop，只需要在终端输入一行命令，就能瞬间启动一个干净的 MongoDB：
+Bash
+
+docker run -d --name local-mongo -p 27017:27017 -v mongo_data:/data/db mongodb/mongodb-community-server:latest
+
+    连接字符串直接就是：mongodb://localhost:27017/myGooseDB
+
+    优点：以后不想要了，直接删掉容器就行，不会污染你电脑的系统环境。

@@ -3,11 +3,11 @@
 > **給 AI 的指示文件。** 每次只執行 **一個** Task，完成驗收後 **單獨 commit**，再停下等下一個指示（或明確說「繼續 Task N」）。  
 > **規格來源（必讀對應章節）：**
 > - [`web_plan.md`](web_plan.md)
-> - [`web_backend_express.md`](web_backend_express.md) v1.4+
+> - [`web_backend_express.md`](web_backend_express.md) v1.5+
 > - [`web_frontend_react.md`](web_frontend_react.md) v1.4+
 > - 遊戲內容：[`vr_goose_game_design.md`](vr_goose_game_design.md)（關卡 0–3）
 >
-> **文件版本：** v1.0　**最後更新：** 2026-07-18
+> **文件版本：** v1.1　**最後更新：** 2026-07-18
 
 ---
 
@@ -17,6 +17,7 @@
 2. 實作前讀該 Task 的「讀取規格」與「範圍／不要做」。
 3. 遵守專案規範：
    - 後端：`process.env` 只在 `appConfig.ts`；Service constructor 注入 config（camelCase）。
+   - 後端架構：`index.ts` 為 composition root（手動組裝 DB／Cache／Service → Controller）；`app.ts` 用 `app.get`／`post`／… 註冊中央路由表；**無**獨立 Router 檔；Controller 只處理 HTTP，業務在 Service。
    - 前端：kebab-case 檔名、shadcn、TanStack Query、Zustand（僅 client UI）。
 4. 完成後跑該 Task 的「驗收」；通過才 commit。
 5. **Commit**：僅在使用者要求、或本 Task 驗收通過且使用者／流程允許時。訊息用下方「建議 commit message」，聚焦 why。不要把無關檔案塞進同一個 commit。
@@ -73,13 +74,13 @@
 
 ### T01 — 後端專案骨架 + Config
 
-- **讀取規格：** `web_backend_express.md` §1–2
+- **讀取規格：** `web_backend_express.md` §1–3（架構約定）
 - **做：**
   - 建立 `web/backend`（Express + TS + eslint + vitest scripts）
   - `appConfig.ts`：zod `loadConfig()`，失敗 `exit(1)`
-  - `createApp` 可匯出；`index.ts` 組裝入口（先可不連 DB）
+  - `createApp(deps)` 可匯出（middleware + 中央路由表骨架）；`index.ts` 為 composition root（先可不連 DB，可先空 controllers）
   - `.env.example`
-- **不要做：** Mongo、業務路由、前端
+- **不要做：** Mongo、業務 Controller、前端；**不要**建立獨立 `*-router.ts`
 - **驗收：** `npm run typecheck`／`lint` 通過；缺 `MONGO_URI` 等必填時啟動失敗（依 schema）
 - **建議 commit message：**
 
@@ -93,12 +94,12 @@ chore(backend): scaffold express typescript with validated config
 
 - **讀取規格：** `web_backend_express.md` §3–4、§6.0、§9
 - **做：**
-  - mongoose 連線（注入 `mongoUri`）
+  - mongoose 連線（注入 `mongoUri`）；於 `index.ts` composition root 組裝
   - `AppError` + 中央 error handler + express error middleware
-  - `GET /health`（含 mongo 狀態）
+  - `HealthController` + 在 `app.ts` 用 `app.get('/health', …)` 註冊
   - SIGTERM／SIGINT／unhandledRejection 處理骨架
   - pino → stdout
-- **不要做：** levels／feedback 業務
+- **不要做：** levels／feedback 業務；**不要**獨立 Router 檔
 - **驗收：** 連上 Atlas（或本機）後 `/health` 回 ok；Compass 可連同一 DB；supertest 測 health 可選
 - **建議 commit message：**
 
@@ -110,11 +111,11 @@ feat(backend): add mongo connection, health check, and central errors
 
 ### T03 — 關卡百科 API（0–3）
 
-- **讀取規格：** `web_backend_express.md` §6.1；`web_frontend_react.md` LevelDoc；`vr_goose_game_design.md` 第 0–3 關
+- **讀取規格：** `web_backend_express.md` §3、§6.1；`web_frontend_react.md` LevelDoc；`vr_goose_game_design.md` 第 0–3 關
 - **做：**
-  - `modules/levels`：router／service／repository
+  - `modules/levels`：types／controller／service／repository（無 router 檔）
+  - `index.ts` 組裝 Repository → Service → Controller；`app.ts` 用 `app.get` 註冊 `/api/v1/levels`、`/api/v1/levels/:levelId`
   - `content/level-0.md` … `level-3.md`（front-matter：title、promptEn、trainingFocus、pitfalls、screenshots）
-  - `GET /api/v1/levels`、`GET /api/v1/levels/:levelId`
   - 截圖可先 placeholder 路徑
 - **不要做：** 留言、前端頁
 - **驗收：** 四關皆可取回完整 `LevelDoc`；404 正確
@@ -186,11 +187,12 @@ feat(frontend): add level encyclopedia pages with safe markdown
 
 ### T07 — 回饋 API + SendGrid
 
-- **讀取規格：** `web_backend_express.md` feedback 流程
+- **讀取規格：** `web_backend_express.md` feedback 流程、§3
 - **做：**
-  - `POST /api/v1/feedback`：rate limit、honeypot、zod、Mongo、寄信（失敗不擋 201）
-  - repository + mail service（config 注入）
-- **不要做：** 前端表單
+  - `FeedbackController` + service／repository／mail service（config 注入）
+  - `index.ts` 組裝；`app.ts` 用 `app.post('/api/v1/feedback', …)` 註冊
+  - rate limit、honeypot、zod、Mongo、寄信（失敗不擋 201）
+- **不要做：** 前端表單；**不要**獨立 Router 檔
 - **驗收：** Compass 見文件；信箱收到通知（或 mock 測）；honeypot／429 行為正確
 - **建議 commit message：**
 
@@ -218,12 +220,13 @@ feat(frontend): add feedback form page
 
 ### T09 — 投票 API + 防刷
 
-- **讀取規格：** `web_backend_express.md` polls／voteGuard
+- **讀取規格：** `web_backend_express.md` polls／voteGuard、§3
 - **做：**
+  - `PollsController` + service／repository／vote-guard
   - polls／votes schema、seed 至少 1 個議題（script 或 migration）
-  - `GET /polls`、`POST /polls/:id/vote`
+  - `index.ts` 組裝；`app.ts` 用 `app.get`／`app.post` 註冊 `/api/v1/polls`、`/api/v1/polls/:pollId/vote`
   - voter_token cookie、unique、rate limit
-- **不要做：** 前端 UI
+- **不要做：** 前端 UI；**不要**獨立 Router 檔
 - **驗收：** 同 cookie 不能投第二次（409）；Compass 見 votes
 - **建議 commit message：**
 
@@ -253,11 +256,11 @@ feat(frontend): add polls page with live results
 
 ### T11 — Press Kit（計數 API + 靜態檔 + 頁面）
 
-- **讀取規格：** plan Press；前後端 press 章節
+- **讀取規格：** plan Press；前後端 press 章節；`web_backend_express.md` §3
 - **做：**
-  - 後端：assets 清單、download count、302 到 `publicAssetBaseUrl`
+  - 後端：`PressController` + service；`index.ts` 組裝；`app.ts` 中央路由註冊 assets 清單／download count／302 到 `publicAssetBaseUrl`
   - 前端：`public/press-kit/` placeholder zip、`/press` 頁、QR
-- **不要做：** 真實大量媒體（可用小檔代替）
+- **不要做：** 真實大量媒體（可用小檔代替）；後端**不要**獨立 Router 檔
 - **驗收：** 下載後 count +1；檔案可下載
 - **建議 commit message：**
 
@@ -286,12 +289,12 @@ feat(frontend): add interactive 3d model viewer
 
 ### T13 — StoreRating（非官方 GraphQL + 快取）
 
-- **讀取規格：** `web_backend_express.md` site-meta／StoreRatingService
+- **讀取規格：** `web_backend_express.md` site-meta／StoreRatingService、§3
 - **做：**
-  - 快取 collection、TTL、失敗回退
-  - `GET /api/v1/site-meta`
+  - Cache（collection／TTL）於 `index.ts` 組裝後注入 `StoreRatingService` → `SiteMetaController`
+  - `app.ts` 用 `app.get('/api/v1/site-meta', …)` 註冊；失敗回退
   - 風險：僅後端呼叫；不回傳 token
-- **不要做：** 前端改版以外的事
+- **不要做：** 前端改版以外的事；**不要**獨立 Router 檔
 - **驗收：** 成功寫入快取；拔網線／錯 token 時仍可回 stale；Compass 可見 cache
 - **建議 commit message：**
 
