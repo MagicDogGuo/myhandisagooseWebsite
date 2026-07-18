@@ -3,6 +3,7 @@ import { lazy, Suspense, useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { ErrorBoundary, ErrorFallback } from '@/components/error-boundary';
+import { SiteLayout } from '@/components/layout/site-layout';
 import { PageSkeleton } from '@/components/page-skeleton';
 
 const HomePage = lazy(() =>
@@ -48,13 +49,15 @@ export function App() {
         <ErrorBoundary fallback={<ErrorFallback />}>
           <Suspense fallback={<PageSkeleton />}>
             <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/levels" element={<LevelsPage />} />
-              <Route path="/levels/:levelId" element={<LevelDetailPage />} />
-              <Route path="/feedback" element={<FeedbackPage />} />
-              <Route path="/polls" element={<PollsPage />} />
-              <Route path="/press" element={<PressKitPage />} />
-              <Route path="/viewer" element={<Viewer3dPage />} />
+              <Route element={<SiteLayout />}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/levels" element={<LevelsPage />} />
+                <Route path="/levels/:levelId" element={<LevelDetailPage />} />
+                <Route path="/feedback" element={<FeedbackPage />} />
+                <Route path="/polls" element={<PollsPage />} />
+                <Route path="/press" element={<PressKitPage />} />
+                <Route path="/viewer" element={<Viewer3dPage />} />
+              </Route>
             </Routes>
           </Suspense>
         </ErrorBoundary>
