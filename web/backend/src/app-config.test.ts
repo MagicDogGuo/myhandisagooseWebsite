@@ -4,8 +4,8 @@ describe('loadConfig', () => {
   it('exits with code 1 when required env is missing', async () => {
     vi.resetModules();
     vi.stubEnv('MONGO_URI', '');
-    vi.stubEnv('SENDGRID_API_KEY', '');
-    vi.stubEnv('SENDGRID_FROM_EMAIL', '');
+    vi.stubEnv('RESEND_API_KEY', '');
+    vi.stubEnv('RESEND_FROM_EMAIL', '');
     vi.stubEnv('FEEDBACK_NOTIFY_EMAIL', '');
     vi.stubEnv('VOTE_IP_HASH_SECRET', '');
     vi.stubEnv('META_APP_ID', '');

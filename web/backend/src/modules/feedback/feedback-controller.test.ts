@@ -55,7 +55,7 @@ describe('POST /api/v1/feedback', () => {
     expect(notify).toHaveBeenCalledOnce();
   });
 
-  it('returns 201 even when SendGrid notify fails', async () => {
+  it('returns 201 even when Resend notify fails', async () => {
     const create = vi.fn(
       async (input: CreateFeedbackInput): Promise<FeedbackRecord> => ({
         id: 'fb-2',
@@ -65,7 +65,7 @@ describe('POST /api/v1/feedback', () => {
       }),
     );
     const notify = vi.fn(async () => {
-      throw new Error('sendgrid down');
+      throw new Error('resend down');
     });
 
     const app = createApp({

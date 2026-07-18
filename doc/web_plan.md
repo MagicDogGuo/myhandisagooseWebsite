@@ -69,7 +69,7 @@
 ### 2.3 意見回饋板
 
 - 表單欄位：類別（bug／建議／其他）、**第幾關（選填）**、內容、聯絡 Email（選填）
-- 後端收到後：存入 MongoDB ＋ 透過 **SendGrid（免費額度）** 寄通知信給開發者
+- 後端收到後：存入 MongoDB ＋ 透過 **Resend（免費額度）** 寄通知信給開發者
 - 防濫用：rate limit（IP）、honeypot 欄位、內容長度限制
 
 ### 2.4 願望清單／投票
@@ -103,7 +103,7 @@
 │  React + TypeScript      │   HTTPS  │  Express + TypeScript        │
 │  (Vite SPA)              │ ───────► │  REST API on AWS EC2         │
 │  react-three-fiber       │          │  mongoose → MongoDB Atlas    │
-│  public/models/*.glb     │          │  SendGrid / Oculus GraphQL   │
+│  public/models/*.glb     │          │  Resend / Oculus GraphQL     │
 │  → AWS S3 (+ CloudFront) │          └──────────────────────────────┘
 └──────────────────────────┘
 Phase 2 (未來)：
@@ -116,7 +116,7 @@ Unity 遊戲 ──POST /api/v1/scores──►  同一個 Express（EC2）
 | 3D | react-three-fiber + drei | 模型放 `public/` |
 | 後端 | Express + TS；**router／service／repository**；**AppError**；zod 驗證 config | 對齊 `nodebestpractices.mdc` |
 | DB | MongoDB Atlas（M0）+ mongoose | Compass 開發驗資料 |
-| Email | SendGrid 免費版 | 回饋通知 |
+| Email | Resend 免費版 | 回饋通知 |
 | 部署 | S3（＋CloudFront）／EC2；Actions **可延後 M6** | |
 
 詳細規格見前端／後端兩份文件；CI/CD 見下方 §4（可整段延到上線前再實作）。
@@ -210,7 +210,7 @@ web/
 | `S3_BUCKET` / `CLOUDFRONT_DISTRIBUTION_ID` | 前端部署目標 |
 | `VITE_API_BASE_URL` | 前端 build 時 API 根路徑 |
 | `EC2_HOST` / `EC2_USER` / `EC2_SSH_KEY` | 後端 SSH 部署（若用 SSM 則改對應設定） |
-| （EC2 機上）`MONGO_URI`、`SENDGRID_*`、`OCULUS_*` 等 | **放在 EC2 的 env 檔**，不要寫進前端 bundle；Actions 不必全部擁有 |
+| （EC2 機上）`MONGO_URI`、`RESEND_*`、`OCULUS_*` 等 | **放在 EC2 的 env 檔**，不要寫進前端 bundle；Actions 不必全部擁有 |
 
 ### 4.6 品質閘門規則
 

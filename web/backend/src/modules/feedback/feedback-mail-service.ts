@@ -1,5 +1,5 @@
-import sgMail from '@sendgrid/mail';
 import type { Logger } from 'pino';
+import { Resend } from 'resend';
 
 import type { FeedbackRecord } from './types/index.js';
 
@@ -10,11 +10,13 @@ export type FeedbackMailConfig = {
 };
 
 export class FeedbackMailService {
+  private readonly resend: Resend;
+
   constructor(
     private readonly config: FeedbackMailConfig,
     private readonly logger: Logger,
   ) {
-    sgMail.setApiKey(config.apiKey);
+    this.resend = new Resend(config.apiKey);
   }
 
   async notify(feedback: FeedbackRecord): Promise<void> {
@@ -31,12 +33,16 @@ export class FeedbackMailService {
       feedback.email ? 'Contact email: (provided)' : 'Contact email: (none)',
     ].join('\n');
 
-    await sgMail.send({
+    const { error } = await this.resend.emails.send({
       to: this.config.notifyEmail,
       from: this.config.fromEmail,
       subject,
       text,
     });
+
+    if (error) {
+      throw new Error(error.message);
+    }
 
     this.logger.info({ feedbackId: feedback.id }, 'feedback notify email sent');
   }

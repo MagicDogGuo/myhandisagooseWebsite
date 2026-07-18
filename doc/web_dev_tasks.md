@@ -57,7 +57,7 @@
 | T04 | 前端專案骨架 + shadcn + 路由 lazy | FE | ⬜ |
 | T05 | Layout + Landing（假排行榜）接 levels | FE | ⬜ |
 | T06 | 關卡列表／詳情頁 | FE | ⬜ |
-| T07 | 回饋 API + SendGrid | BE | ⬜ |
+| T07 | 回饋 API + Resend | BE | ⬜ |
 | T08 | 回饋表單頁 | FE | ⬜ |
 | T09 | 投票 API + 防刷 | BE | ⬜ |
 | T10 | 投票頁 | FE | ⬜ |
@@ -188,7 +188,7 @@ feat(frontend): add level encyclopedia pages with safe markdown
 
 ## Phase C — 互動成對
 
-### T07 — 回饋 API + SendGrid
+### T07 — 回饋 API + Resend
 
 - **讀取規格：** `web_backend_express.md` feedback 流程、§3
 - **做：**
@@ -200,7 +200,7 @@ feat(frontend): add level encyclopedia pages with safe markdown
 - **建議 commit message：**
 
 ```
-feat(backend): add feedback API with sendgrid notify
+feat(backend): add feedback API with resend notify
 ```
 
 ---

@@ -52,7 +52,7 @@ async function main(): Promise<void> {
   const levelsController = new LevelsController(levelsService);
 
   const feedbackRepository = new FeedbackRepository();
-  const feedbackMailService = new FeedbackMailService(config.sendgrid, logger);
+  const feedbackMailService = new FeedbackMailService(config.resend, logger);
   const feedbackService = new FeedbackService(
     feedbackRepository,
     feedbackMailService,

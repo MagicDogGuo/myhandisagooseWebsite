@@ -2,7 +2,7 @@ import 'dotenv/config';
 
 import { z } from 'zod';
 
-const sendgridSchema = z.object({
+const resendSchema = z.object({
   apiKey: z.string().min(1),
   fromEmail: z.string().email(),
   notifyEmail: z.string().email(),
@@ -28,7 +28,7 @@ const appConfigSchema = z.object({
   corsOrigin: z.string().min(1),
   mongoUri: z.string().min(1),
   publicAssetBaseUrl: z.string().url(),
-  sendgrid: sendgridSchema,
+  resend: resendSchema,
   vote: voteSchema,
   storeRating: storeRatingSchema,
 });
@@ -43,9 +43,9 @@ function readRawConfig() {
     mongoUri: process.env.MONGO_URI ?? '',
     publicAssetBaseUrl:
       process.env.PUBLIC_ASSET_BASE_URL ?? 'http://localhost:5173',
-    sendgrid: {
-      apiKey: process.env.SENDGRID_API_KEY ?? '',
-      fromEmail: process.env.SENDGRID_FROM_EMAIL ?? '',
+    resend: {
+      apiKey: process.env.RESEND_API_KEY ?? '',
+      fromEmail: process.env.RESEND_FROM_EMAIL ?? '',
       notifyEmail: process.env.FEEDBACK_NOTIFY_EMAIL ?? '',
     },
     vote: {

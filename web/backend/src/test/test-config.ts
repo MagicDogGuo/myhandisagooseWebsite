@@ -9,7 +9,7 @@ export function createTestConfig(
     corsOrigin: 'http://localhost:5173',
     mongoUri: 'mongodb://127.0.0.1:27017/goose_web_test',
     publicAssetBaseUrl: 'http://localhost:5173',
-    sendgrid: {
+    resend: {
       apiKey: 'test-key',
       fromEmail: 'noreply@example.com',
       notifyEmail: 'dev@example.com',
