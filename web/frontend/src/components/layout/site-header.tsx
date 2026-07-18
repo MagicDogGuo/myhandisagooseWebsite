@@ -22,7 +22,7 @@ export function SiteHeader() {
           <NavLink
             to="/"
             aria-label="My Hand Is A Goose home"
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border-2 border-primary bg-surface p-0.5 pr-3"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full border-2 border-amber bg-surface p-0.5 pr-3"
             onClick={() => setOpen(false)}
           >
             <img
@@ -33,8 +33,8 @@ export function SiteHeader() {
               className="size-9 rounded-full object-cover"
               decoding="async"
             />
-            <span className="text-sm font-black tracking-tight text-primary">
-              GOOSE
+            <span className="text-sm font-black tracking-tight text-amber">
+              My Hand is a Goose
             </span>
           </NavLink>
 
