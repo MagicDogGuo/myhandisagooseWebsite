@@ -1,8 +1,9 @@
 # 🪿 官方網站 — React + TypeScript 前端規格
 
 > **對應文件：** [`web_plan.md`](web_plan.md)（總計畫）、[`web_backend_express.md`](web_backend_express.md)（後端 API）  
+> **視覺設計規範：** [`Nintendodesign.md`](Nintendodesign.md)（Y2K console-chrome；前端實作 UI 時必讀）  
 > **對齊 Cursor rule：** `react=best-practice.mdc`  
-> **文件版本：** v1.4　**最後更新：** 2026-07-18
+> **文件版本：** v1.5　**最後更新：** 2026-07-18
 
 ---
 
@@ -99,6 +100,28 @@ web/frontend/
 ```
 
 上線前再加：`.github/workflows/ci.yml`、`deploy-frontend.yml`。
+
+---
+
+### 2.3 視覺設計（必讀）
+
+前端設計與實作 UI 時，以 [`Nintendodesign.md`](Nintendodesign.md) 為視覺語言依據（Nintendo.com circa 2001 console-chrome）。重點摘要：
+
+| 面向 | 方向 |
+|------|------|
+| 整體感覺 | 頁面像組裝好的主機面板：bevel 金屬板、chamfer 切角，不是現代卡片牆 |
+| 色票 | 冷色 periwinkle chrome + carbon 指揮層；暖色（amber／signal orange）只做「前進／操作」訊號 |
+| 字級處理 | 結構標籤 uppercase + tracking；hero 字用 outline + hard drop shadow（box-art） |
+| 深度 | 硬 bevel／切角，不用模糊 soft shadow |
+| 密度 | 模組緊貼、縫隙當結構縫，避免過大留白 |
+
+**與本專案的適配（不要照抄 2001 固定寬）：**
+
+- 仍遵守本規格的 **手機優先／響應式**（`Nintendodesign.md` 的「現代 port」建議：窄螢幕堆疊右欄、nav 收合）
+- 品牌換成「鵝頭偷麵包」；色票與 bevel 語彙可沿用，Mario／Nintendo 商標素材不可用
+- shadcn 元件可當互動 primitive，但外觀 token（色、圓角、bevel）應對齊該設計規範，勿維持預設「圓角卡片 + soft shadow」風格
+
+實作 Tailwind／CSS 變數時，優先對照 `Nintendodesign.md` 的 Colors、Typography、Shapes、Do's and Don'ts。
 
 ---
 
@@ -275,6 +298,7 @@ OIDC → `s3 sync` → CloudFront invalidate（路徑含 `/index.html`、`/asset
 ## 9. 驗收清單（Phase 1）
 
 - [ ] shadcn 用於主要 UI
+- [ ] 視覺語彙對齊 [`Nintendodesign.md`](Nintendodesign.md)（bevel／色票／暖色僅訊號；非預設圓角軟陰影）
 - [ ] 路由 lazy；ErrorBoundary 生效
 - [ ] Markdown 消毒渲染
 - [ ] Demo 排行、關卡 0–3、回饋、投票、Press、3D
