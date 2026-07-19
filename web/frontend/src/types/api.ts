@@ -26,3 +26,25 @@ export interface LevelDoc extends LevelSummary {
 export interface LevelsListResponse {
   levels: LevelSummary[];
 }
+
+export interface PollOptionResult {
+  id: string;
+  label: string;
+  voteCount: number;
+}
+
+export interface PollResult {
+  id: string;
+  question: string;
+  options: PollOptionResult[];
+  totalVotes: number;
+  myVote: string | null;
+}
+
+export interface PollsListResponse {
+  polls: PollResult[];
+}
+
+export interface CastVoteResponse {
+  poll: PollResult;
+}
