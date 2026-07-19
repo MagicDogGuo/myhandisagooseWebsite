@@ -14,21 +14,43 @@ import { HealthController } from '../modules/health/health-controller.js';
 import { LevelsController } from '../modules/levels/levels-controller.js';
 import { LevelsRepository } from '../modules/levels/levels-repository.js';
 import { LevelsService } from '../modules/levels/levels-service.js';
+import { PollsController } from '../modules/polls/polls-controller.js';
+import type { PollsService } from '../modules/polls/polls-service.js';
+import type { PollResult } from '../modules/polls/types/index.js';
+import { VoteGuard } from '../modules/polls/vote-guard.js';
+import { createTestConfig } from './test-config.js';
 
 export type FeedbackTestDoubles = {
   repository?: Pick<FeedbackRepository, 'create'>;
   mailService?: Pick<FeedbackMailService, 'notify'>;
 };
 
+export type PollsTestDoubles = {
+  service?: Pick<PollsService, 'listPolls' | 'castVote'>;
+  voteGuard?: VoteGuard;
+};
+
 export function createSilentLogger(): Logger {
   return pino({ level: 'silent' });
 }
 
+const defaultPoll: PollResult = {
+  id: 'poll-1',
+  question: 'What next?',
+  options: [
+    { id: 'patrol', label: 'Patrol', voteCount: 0 },
+    { id: 'bread', label: 'Bread', voteCount: 0 },
+  ],
+  totalVotes: 0,
+  myVote: null,
+};
+
 export function createTestControllers(
   overrides: Partial<AppControllers> = {},
-  doubles: FeedbackTestDoubles = {},
+  doubles: FeedbackTestDoubles & { polls?: PollsTestDoubles } = {},
 ): AppControllers {
   const logger = createSilentLogger();
+  const config = createTestConfig();
   const levelsService = new LevelsService(new LevelsRepository());
 
   const repository: Pick<FeedbackRepository, 'create'> = doubles.repository ?? {
@@ -53,10 +75,34 @@ export function createTestControllers(
     logger,
   );
 
+  const voteGuard =
+    doubles.polls?.voteGuard ?? new VoteGuard(config.vote);
+
+  const pollsService: Pick<PollsService, 'listPolls' | 'castVote'> =
+    doubles.polls?.service ?? {
+      listPolls: async () => [defaultPoll],
+      castVote: async (params) => ({
+        ...defaultPoll,
+        id: params.pollId,
+        myVote: params.optionId,
+        totalVotes: 1,
+        options: defaultPoll.options.map((option) =>
+          option.id === params.optionId
+            ? { ...option, voteCount: 1 }
+            : option,
+        ),
+      }),
+    };
+
   return {
     health: new HealthController(),
     levels: new LevelsController(levelsService),
     feedback: new FeedbackController(feedbackService),
+    polls: new PollsController(
+      pollsService as PollsService,
+      voteGuard,
+      config.nodeEnv,
+    ),
     ...overrides,
   };
 }

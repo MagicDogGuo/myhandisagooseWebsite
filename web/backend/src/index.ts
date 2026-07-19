@@ -12,6 +12,10 @@ import { HealthController } from './modules/health/health-controller.js';
 import { LevelsController } from './modules/levels/levels-controller.js';
 import { LevelsRepository } from './modules/levels/levels-repository.js';
 import { LevelsService } from './modules/levels/levels-service.js';
+import { PollsController } from './modules/polls/polls-controller.js';
+import { PollsRepository } from './modules/polls/polls-repository.js';
+import { PollsService } from './modules/polls/polls-service.js';
+import { VoteGuard } from './modules/polls/vote-guard.js';
 
 const config = loadConfig();
 const logger = createLogger(config.nodeEnv);
@@ -60,6 +64,15 @@ async function main(): Promise<void> {
   );
   const feedbackController = new FeedbackController(feedbackService);
 
+  const pollsRepository = new PollsRepository();
+  const voteGuard = new VoteGuard(config.vote);
+  const pollsService = new PollsService(pollsRepository, voteGuard);
+  const pollsController = new PollsController(
+    pollsService,
+    voteGuard,
+    config.nodeEnv,
+  );
+
   const healthController = new HealthController();
 
   const app = createApp({
@@ -69,6 +82,7 @@ async function main(): Promise<void> {
       health: healthController,
       levels: levelsController,
       feedback: feedbackController,
+      polls: pollsController,
     },
   });
 
