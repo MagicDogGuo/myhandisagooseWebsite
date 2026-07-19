@@ -48,3 +48,15 @@ export interface PollsListResponse {
 export interface CastVoteResponse {
   poll: PollResult;
 }
+
+export interface PressAsset {
+  id: string;
+  title: string;
+  description: string;
+  relativePath: string;
+  downloadCount: number;
+}
+
+export interface PressAssetsResponse {
+  assets: PressAsset[];
+}
