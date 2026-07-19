@@ -4,7 +4,7 @@ import { META_STORE_URL } from '@/lib/store-links';
 export function HomeHero() {
   return (
     <section className="border-b border-chrome-indigo bg-canvas px-3 py-3 sm:px-4 sm:py-4">
-      <div className="relative overflow-hidden rounded-sm border border-chrome-indigo bg-systems-teal shadow-[inset_0_-2px_0_var(--chrome-indigo)]">
+      <div className="animate-plate-boot relative overflow-hidden rounded-sm border border-chrome-indigo bg-systems-teal shadow-[inset_0_-2px_0_var(--chrome-indigo)]">
         <img
           src="/Herocover.png"
           alt="My Hand Is A Goose — VR goose comedy cover art"
@@ -21,26 +21,33 @@ export function HomeHero() {
         <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 px-3 pb-3 pt-10 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:px-4 sm:pb-4 sm:pt-0">
           <div className="min-w-0">
             <h1 className="sr-only">My Hand Is A Goose</h1>
-            <p className="animate-rise text-hero-tagline max-w-sm text-white drop-shadow-sm">
+            <p className="animate-stamp text-hero-tagline max-w-sm text-white drop-shadow-sm">
               Your hand becomes a goose head. Steal bread, scoop goslings home,
               and try not to drop anything in the pond.
             </p>
           </div>
-          <div className="animate-rise-delay-1 flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
-            <Button asChild size="sm" className="animate-signal w-full sm:w-auto">
+          <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap">
+            <Button
+              asChild
+              size="sm"
+              className="animate-signal-chip w-full sm:w-auto"
+            >
               <a
                 href={META_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Meta Store →
+                Meta Store{' '}
+                <span className="animate-arrow-nudge" aria-hidden>
+                  →
+                </span>
               </a>
             </Button>
             <Button
               asChild
               size="sm"
               variant="amber"
-              className="w-full sm:w-auto"
+              className="animate-chip-pop-delay w-full sm:w-auto"
             >
               <a href="#leaderboard">Demo ranks</a>
             </Button>
