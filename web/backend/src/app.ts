@@ -16,12 +16,14 @@ import type { FeedbackController } from './modules/feedback/feedback-controller.
 import type { HealthController } from './modules/health/health-controller.js';
 import type { LevelsController } from './modules/levels/levels-controller.js';
 import type { PollsController } from './modules/polls/polls-controller.js';
+import type { PressController } from './modules/press/press-controller.js';
 
 export type AppControllers = {
   health: HealthController;
   levels: LevelsController;
   feedback: FeedbackController;
   polls: PollsController;
+  press: PressController;
 };
 
 export type CreateAppDeps = {
@@ -83,6 +85,18 @@ export function createApp(deps: CreateAppDeps): Express {
     voteRateLimiter,
     asyncHandler(async (req, res) => {
       await controllers.polls.vote(req, res);
+    }),
+  );
+  app.get(
+    '/api/v1/press/assets',
+    asyncHandler(async (req, res) => {
+      await controllers.press.list(req, res);
+    }),
+  );
+  app.get(
+    '/api/v1/press/assets/:assetId/download',
+    asyncHandler(async (req, res) => {
+      await controllers.press.download(req, res);
     }),
   );
 

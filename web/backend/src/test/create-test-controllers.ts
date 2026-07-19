@@ -18,6 +18,9 @@ import { PollsController } from '../modules/polls/polls-controller.js';
 import type { PollsService } from '../modules/polls/polls-service.js';
 import type { PollResult } from '../modules/polls/types/index.js';
 import { VoteGuard } from '../modules/polls/vote-guard.js';
+import { PressController } from '../modules/press/press-controller.js';
+import type { PressService } from '../modules/press/press-service.js';
+import type { PressAsset } from '../modules/press/types/index.js';
 import { createTestConfig } from './test-config.js';
 
 export type FeedbackTestDoubles = {
@@ -28,6 +31,10 @@ export type FeedbackTestDoubles = {
 export type PollsTestDoubles = {
   service?: Pick<PollsService, 'listPolls' | 'castVote'>;
   voteGuard?: VoteGuard;
+};
+
+export type PressTestDoubles = {
+  service?: Pick<PressService, 'listAssets' | 'recordDownload'>;
 };
 
 export function createSilentLogger(): Logger {
@@ -45,9 +52,22 @@ const defaultPoll: PollResult = {
   myVote: null,
 };
 
+const defaultPressAssets: PressAsset[] = [
+  {
+    id: 'press-kit',
+    title: 'Press Kit (placeholder)',
+    description: 'Placeholder zip',
+    relativePath: '/press-kit/press-kit.zip',
+    downloadCount: 0,
+  },
+];
+
 export function createTestControllers(
   overrides: Partial<AppControllers> = {},
-  doubles: FeedbackTestDoubles & { polls?: PollsTestDoubles } = {},
+  doubles: FeedbackTestDoubles & {
+    polls?: PollsTestDoubles;
+    press?: PressTestDoubles;
+  } = {},
 ): AppControllers {
   const logger = createSilentLogger();
   const config = createTestConfig();
@@ -94,6 +114,14 @@ export function createTestControllers(
       }),
     };
 
+  const pressService: Pick<PressService, 'listAssets' | 'recordDownload'> =
+    doubles.press?.service ?? {
+      listAssets: async () => defaultPressAssets,
+      recordDownload: async (assetId) => ({
+        redirectUrl: `${config.publicAssetBaseUrl}/press-kit/${assetId}.zip`,
+      }),
+    };
+
   return {
     health: new HealthController(),
     levels: new LevelsController(levelsService),
@@ -103,6 +131,7 @@ export function createTestControllers(
       voteGuard,
       config.nodeEnv,
     ),
+    press: new PressController(pressService as PressService),
     ...overrides,
   };
 }
