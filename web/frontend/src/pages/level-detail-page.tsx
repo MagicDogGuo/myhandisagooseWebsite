@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { ApiError } from '@/api/client';
 import { fetchLevelById } from '@/api/levels';
 import { ChromeShell } from '@/components/layout/chrome-shell';
+import { LevelAdjacentNav } from '@/components/levels/level-adjacent-nav';
 import { LevelPitfalls } from '@/components/levels/level-pitfalls';
 import { LevelScreenshots } from '@/components/levels/level-screenshots';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -76,6 +77,8 @@ export function LevelDetailPage() {
 
         {data ? (
           <article className="mt-5 space-y-5">
+            <LevelAdjacentNav currentLevelId={data.levelId} />
+
             <header className="bevel-plate overflow-hidden rounded-sm">
               <div className="section-label-bar">Level {data.levelId}</div>
               <div className="bg-lavender/70 px-4 py-5 sm:px-5">
@@ -118,6 +121,8 @@ export function LevelDetailPage() {
               screenshots={data.screenshots}
               levelTitle={data.title}
             />
+
+            <LevelAdjacentNav currentLevelId={data.levelId} />
           </article>
         ) : null}
       </main>
