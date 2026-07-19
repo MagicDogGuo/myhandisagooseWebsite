@@ -29,6 +29,9 @@ const PressKitPage = lazy(() =>
 const Viewer3dPage = lazy(() =>
   import('@/pages/viewer-3d-page').then((m) => ({ default: m.Viewer3dPage })),
 );
+const NotFoundPage = lazy(() =>
+  import('@/pages/not-found-page').then((m) => ({ default: m.NotFoundPage })),
+);
 
 export function App() {
   const [queryClient] = useState(
@@ -57,6 +60,7 @@ export function App() {
                 <Route path="/polls" element={<PollsPage />} />
                 <Route path="/press" element={<PressKitPage />} />
                 <Route path="/viewer" element={<Viewer3dPage />} />
+                <Route path="*" element={<NotFoundPage />} />
               </Route>
             </Routes>
           </Suspense>
