@@ -13,14 +13,6 @@ type LevelScreenshotsProps = {
   levelTitle: string;
 };
 
-/** API paths end in .png; local placeholders ship as .svg until real captures land. */
-function resolveScreenshotSrc(src: string): string {
-  if (src.startsWith('/placeholders/levels/') && src.endsWith('.png')) {
-    return src.replace(/\.png$/, '.svg');
-  }
-  return src;
-}
-
 export function LevelScreenshots({
   screenshots,
   levelTitle,
@@ -32,39 +24,33 @@ export function LevelScreenshots({
   }
 
   const activeSrc =
-    activeIndex !== null
-      ? resolveScreenshotSrc(screenshots[activeIndex] ?? '')
-      : undefined;
+    activeIndex !== null ? (screenshots[activeIndex] ?? undefined) : undefined;
 
   return (
     <section className="overflow-hidden rounded-sm">
       <div className="section-label-bar">Screenshots</div>
       <div className="bevel-inset px-4 py-4 sm:px-5">
         <p className="text-ink-soft text-xs sm:text-sm">
-          Tap an image to open the lightbox. Placeholder art until final captures
-          land.
+          Tap an image to open the lightbox.
         </p>
         <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-          {screenshots.map((src, index) => {
-            const resolved = resolveScreenshotSrc(src);
-            return (
-              <li key={src}>
-                <button
-                  type="button"
-                  className="bevel-plate focus-visible:ring-signal group relative block w-full overflow-hidden rounded-sm focus-visible:ring-2 focus-visible:outline-none"
-                  onClick={() => setActiveIndex(index)}
-                  aria-label={`Open screenshot ${index + 1} of ${levelTitle}`}
-                >
-                  <img
-                    src={resolved}
-                    alt={`${levelTitle} screenshot ${index + 1}`}
-                    className="aspect-video w-full object-cover"
-                    loading="lazy"
-                  />
-                </button>
-              </li>
-            );
-          })}
+          {screenshots.map((src, index) => (
+            <li key={src}>
+              <button
+                type="button"
+                className="bevel-plate focus-visible:ring-signal group relative block w-full overflow-hidden rounded-sm focus-visible:ring-2 focus-visible:outline-none"
+                onClick={() => setActiveIndex(index)}
+                aria-label={`Open screenshot ${index + 1} of ${levelTitle}`}
+              >
+                <img
+                  src={src}
+                  alt={`${levelTitle} screenshot ${index + 1}`}
+                  className="aspect-video w-full object-cover"
+                  loading="lazy"
+                />
+              </button>
+            </li>
+          ))}
         </ul>
       </div>
 

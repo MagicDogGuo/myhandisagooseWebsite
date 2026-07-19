@@ -6,8 +6,8 @@ trainingFocus:
   - Coordinate carry and handoff between two geese
   - Keep balance in a moving environment
 screenshots:
-  - /placeholders/levels/level-2-1.png
-  - /placeholders/levels/level-2-2.png
+  - /placeholders/levels/level-2-1.jpg
+  - /placeholders/levels/level-2-2.jpg
 pitfalls:
   - title: Bad platform timing
     detail: Jumping when the platform leaves often means a water drop. Wait until it is close.
@@ -18,5 +18,3 @@ pitfalls:
 ## Overview
 
 This stage adds a **moving platform** and needs **two geese** working together to get bread home reliably.
-
-> Content summarized from `web_plan.md`; fuller design notes will follow from the game design doc.

@@ -6,8 +6,8 @@ trainingFocus:
   - Time when to catch and when to release
   - Hand off from hook pull to bare-hand carry
 screenshots:
-  - /placeholders/levels/level-1-1.png
-  - /placeholders/levels/level-1-2.png
+  - /placeholders/levels/level-1-1.jpg
+  - /placeholders/levels/level-1-2.jpg
 pitfalls:
   - title: Hook mistiming
     detail: Hooking too early or too late comes up empty. Aim at the bread before you pull.
@@ -18,5 +18,3 @@ pitfalls:
 ## Overview
 
 This level introduces the **hook**: pull unreachable bread closer, then carry it back to the nest.
-
-> Content summarized from `web_plan.md`; fuller design notes will follow from the game design doc.
