@@ -4,13 +4,13 @@ import { Box3, Vector3 } from 'three';
 
 import { VIEWER_MODELS } from '@/components/viewer-3d/viewer-models';
 
-const TARGET_SIZE = 1.6;
-
 type GlbModelProps = {
   glbPath: string;
+  /** Uniform max axis length after normalize. */
+  targetSize?: number;
 };
 
-export function GlbModel({ glbPath }: GlbModelProps) {
+export function GlbModel({ glbPath, targetSize = 1.2 }: GlbModelProps) {
   const { scene } = useGLTF(glbPath);
 
   const prepared = useMemo(() => {
@@ -26,9 +26,9 @@ export function GlbModel({ glbPath }: GlbModelProps) {
     const size = new Vector3();
     box.getSize(size);
     const maxAxis = Math.max(size.x, size.y, size.z) || 1;
-    root.scale.setScalar(TARGET_SIZE / maxAxis);
+    root.scale.setScalar(targetSize / maxAxis);
     return root;
-  }, [scene]);
+  }, [scene, targetSize]);
 
   return (
     <Center>

@@ -10,14 +10,13 @@ export type ViewerModelDef = {
 
 /**
  * Models currently shipped under `public/3D/`.
- * More props (toast, baguette, hook, brush…) can be added when Unity exports land.
  */
 export const VIEWER_MODELS: readonly ViewerModelDef[] = [
   {
-    id: 'little-duck',
-    label: 'Little duck',
-    description: 'Gosling / duck prop',
-    glbPath: '/3D/littelDuck.glb',
+    id: 'little-goose',
+    label: 'Little goose',
+    description: 'Gosling prop',
+    glbPath: '/3D/littleGoose.glb',
   },
   {
     id: 'head',
@@ -32,11 +31,3 @@ export const VIEWER_MODELS: readonly ViewerModelDef[] = [
     glbPath: '/3D/nest.glb',
   },
 ] as const;
-
-export function getViewerModel(id: ViewerModelId): ViewerModelDef {
-  const model = VIEWER_MODELS.find((entry) => entry.id === id);
-  if (!model) {
-    throw new Error(`Unknown viewer model: ${id}`);
-  }
-  return model;
-}

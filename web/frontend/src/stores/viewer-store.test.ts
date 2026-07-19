@@ -10,8 +10,8 @@ describe('useViewerStore', () => {
     useViewerStore.setState({ selectedModelId: DEFAULT_VIEWER_MODEL_ID });
   });
 
-  it('defaults to little-duck', () => {
-    expect(useViewerStore.getState().selectedModelId).toBe('little-duck');
+  it('defaults to head (center of lineup)', () => {
+    expect(useViewerStore.getState().selectedModelId).toBe('head');
   });
 
   it('updates the selected model', () => {
