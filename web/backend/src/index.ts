@@ -16,6 +16,9 @@ import { PollsController } from './modules/polls/polls-controller.js';
 import { PollsRepository } from './modules/polls/polls-repository.js';
 import { PollsService } from './modules/polls/polls-service.js';
 import { VoteGuard } from './modules/polls/vote-guard.js';
+import { PressController } from './modules/press/press-controller.js';
+import { PressRepository } from './modules/press/press-repository.js';
+import { PressService } from './modules/press/press-service.js';
 
 const config = loadConfig();
 const logger = createLogger(config.nodeEnv);
@@ -73,6 +76,12 @@ async function main(): Promise<void> {
     config.nodeEnv,
   );
 
+  const pressRepository = new PressRepository();
+  const pressService = new PressService(pressRepository, {
+    publicAssetBaseUrl: config.publicAssetBaseUrl,
+  });
+  const pressController = new PressController(pressService);
+
   const healthController = new HealthController();
 
   const app = createApp({
@@ -83,6 +92,7 @@ async function main(): Promise<void> {
       levels: levelsController,
       feedback: feedbackController,
       polls: pollsController,
+      press: pressController,
     },
   });
 
