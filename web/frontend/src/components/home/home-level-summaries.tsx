@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import { fetchLevelSummaries } from '@/api/levels';
+import { LevelCard } from '@/components/levels/level-card';
 import { Skeleton } from '@/components/ui/skeleton';
 
 export function HomeLevelSummaries() {
@@ -51,20 +52,7 @@ export function HomeLevelSummaries() {
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {data.levels.map((level) => (
               <li key={level.levelId}>
-                <Link
-                  to={`/levels/${level.levelId}`}
-                  className="bevel-plate-raised hover:brightness-105 block rounded-sm p-3 transition-[filter]"
-                >
-                  <p className="label-chrome text-ink-soft">
-                    Level {level.levelId}
-                  </p>
-                  <h3 className="mt-1 text-sm font-bold text-ink">
-                    {level.title}
-                  </h3>
-                  <p className="text-ink-soft mt-2 text-xs italic">
-                    {level.promptEn}
-                  </p>
-                </Link>
+                <LevelCard level={level} compact />
               </li>
             ))}
           </ul>
