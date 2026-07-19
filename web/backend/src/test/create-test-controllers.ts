@@ -55,8 +55,8 @@ const defaultPoll: PollResult = {
 const defaultPressAssets: PressAsset[] = [
   {
     id: 'press-kit',
-    title: 'Press Kit (placeholder)',
-    description: 'Placeholder zip',
+    title: 'Press Kit',
+    description: 'Logos, screenshots, and promo art for media coverage.',
     relativePath: '/press-kit/press-kit.zip',
     downloadCount: 0,
   },

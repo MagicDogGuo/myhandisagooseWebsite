@@ -14,7 +14,7 @@ vi.mock('@/api/press', () => ({
 const assets: PressAsset[] = [
   {
     id: 'press-kit',
-    title: 'Press Kit (placeholder)',
+    title: 'Press Kit',
     description: 'Logo and promo pack',
     relativePath: '/press-kit/press-kit.zip',
     downloadCount: 4,

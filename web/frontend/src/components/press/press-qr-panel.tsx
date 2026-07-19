@@ -2,7 +2,7 @@ import { QRCodeSVG } from 'qrcode.react';
 
 import { META_STORE_URL } from '@/lib/store-links';
 
-export const PRESS_CONTACT_EMAIL = 'hello@myhandisagoose.example';
+export const PRESS_CONTACT_EMAIL = 'samkuo8310@gmail.com';
 
 type PressQrPanelProps = {
   pressPageUrl: string;

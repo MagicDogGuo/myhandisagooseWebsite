@@ -4,15 +4,15 @@ import type { PressAssetDefinition } from './types/index.js';
 export const PRESS_ASSETS: readonly PressAssetDefinition[] = [
   {
     id: 'press-kit',
-    title: 'Press Kit (placeholder)',
+    title: 'Press Kit',
     description:
-      'Logo, screenshots, and promo art placeholder zip. Replace with final media before launch.',
+      'Logos, screenshots, and promo art for media coverage.',
     relativePath: '/press-kit/press-kit.zip',
   },
   {
     id: 'logo-pack',
-    title: 'Logo pack (placeholder)',
-    description: 'Wordmark and icon placeholders for press use.',
+    title: 'Logo pack',
+    description: 'Wordmark and icon assets for press use.',
     relativePath: '/press-kit/logo-pack.zip',
   },
 ] as const;

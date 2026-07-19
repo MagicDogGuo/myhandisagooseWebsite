@@ -13,7 +13,7 @@ import type { PressAsset } from './types/index.js';
 const sampleAssets: PressAsset[] = [
   {
     id: 'press-kit',
-    title: 'Press Kit (placeholder)',
+    title: 'Press Kit',
     description: 'Placeholder zip',
     relativePath: '/press-kit/press-kit.zip',
     downloadCount: 2,

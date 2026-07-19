@@ -23,11 +23,8 @@ export function PressKitPage() {
             Media & contact
           </h1>
           <p className="text-ink-soft mb-2 max-w-2xl text-xs leading-relaxed sm:text-sm">
-            Download logos and promo packs for coverage. Counts are tracked by
-            the API before redirecting to the static file. Placeholders for now
-            — swap the zips under{' '}
-            <code className="text-ink">public/press-kit/</code> when finals are
-            ready.
+            Download logos and promo packs for coverage. Download counts are
+            tracked by the API before redirecting to the static file.
           </p>
           <p className="text-ink-soft mb-6 text-xs sm:text-sm">
             Press contact:{' '}
