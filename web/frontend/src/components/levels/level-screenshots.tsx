@@ -46,7 +46,8 @@ export function LevelScreenshots({
                   src={src}
                   alt={`${levelTitle} screenshot ${index + 1}`}
                   className="aspect-video w-full object-cover"
-                  loading="lazy"
+                  loading={index === 0 ? 'eager' : 'lazy'}
+                  fetchPriority={index === 0 ? 'high' : 'auto'}
                 />
               </button>
             </li>

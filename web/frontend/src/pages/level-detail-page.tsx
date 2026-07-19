@@ -91,6 +91,11 @@ export function LevelDetailPage() {
               </div>
             </header>
 
+            <LevelScreenshots
+              screenshots={data.screenshots}
+              levelTitle={data.title}
+            />
+
             <section className="overflow-hidden rounded-sm">
               <div className="section-label-bar">Training focus</div>
               <ul className="bevel-inset space-y-2 px-4 py-4 sm:px-5">
@@ -116,11 +121,6 @@ export function LevelDetailPage() {
             </section>
 
             <LevelPitfalls pitfalls={data.pitfalls} />
-
-            <LevelScreenshots
-              screenshots={data.screenshots}
-              levelTitle={data.title}
-            />
 
             <LevelAdjacentNav currentLevelId={data.levelId} />
           </article>
