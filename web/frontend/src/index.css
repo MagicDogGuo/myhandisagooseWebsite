@@ -331,6 +331,8 @@
         rgb(0 0 0 / 0.12) 2px,
         rgb(0 0 0 / 0.12) 3px
       );
+    background-size: auto, 100% 3px;
+    animation: crt-scanlines 1.2s linear infinite;
     box-shadow: inset 0 0 28px rgb(0 0 0 / 0.35);
   }
 
@@ -370,6 +372,16 @@
   }
   to {
     background-position: 28px 14px, -14px 28px;
+  }
+}
+
+/* Scanline period is 3px — shift by one period for a seamless loop */
+@keyframes crt-scanlines {
+  from {
+    background-position: 0 0, 0 0;
+  }
+  to {
+    background-position: 0 0, 0 3px;
   }
 }
 
@@ -505,6 +517,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero-grid,
+  .crt-glass,
   .animate-rise,
   .animate-rise-delay-1,
   .animate-rise-delay-2,
