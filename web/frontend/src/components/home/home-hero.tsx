@@ -1,5 +1,6 @@
+import { MetaIcon, SideQuestIcon } from '@/components/icons/store-icons';
 import { Button } from '@/components/ui/button';
-import { META_STORE_URL } from '@/lib/store-links';
+import { META_STORE_URL, SIDEQUEST_URL } from '@/lib/store-links';
 
 const HERO_SHOT = `/screeShot/${encodeURIComponent('Image Sequence_010_0000.jpg')}`;
 
@@ -62,7 +63,8 @@ export function HomeHero() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    Meta Store{' '}
+                    <MetaIcon className="size-3.5 sm:size-4" />
+                    Meta Store
                     <span className="animate-arrow-nudge" aria-hidden>
                       →
                     </span>
@@ -74,7 +76,17 @@ export function HomeHero() {
                   variant="amber"
                   className="animate-chip-pop-delay h-8 w-full px-2.5 text-[0.7rem] sm:h-9 sm:w-auto sm:text-xs"
                 >
-                  <a href="#leaderboard">Demo ranks</a>
+                  <a
+                    href={SIDEQUEST_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <SideQuestIcon className="size-3.5 sm:size-4" />
+                    SideQuest
+                    <span className="animate-arrow-nudge" aria-hidden>
+                      →
+                    </span>
+                  </a>
                 </Button>
               </div>
             </div>
