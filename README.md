@@ -6,6 +6,21 @@ Official site for the VR game **My Hand Is A Goose**: game intro, level guides, 
 **CloudFront（backup）:** [https://d3vlpanqbcn6jb.cloudfront.net/](https://d3vlpanqbcn6jb.cloudfront.net/)  
 **Meta Store:** [My Hand is a Goose Demo](https://www.meta.com/en-gb/experiences/my-hand-is-a-goose-demo/1211524025377940/)
 
+## Screenshots
+
+![Home hero](source/home-hero.png)
+
+![Demo](source/demo.gif)
+
+| Page | Preview |
+|------|---------|
+| Home — leaderboard & levels | ![Home leaderboard](source/home-leaderboard-levels.png) |
+| Levels | ![Levels](source/levels.png) |
+| Polls | ![Polls](source/polls.png) |
+| Viewer | ![Viewer](source/viewer.png) |
+| Feedback | ![Feedback](source/feedback.png) |
+| Press | ![Press](source/press.png) |
+
 ## Features
 
 - **Landing** — Game pitch, Meta Store link / QR code, demo leaderboard
@@ -38,6 +53,7 @@ web/frontend  →  HTTPS  →  web/backend (Express :3002)
 ├── web/
 │   ├── frontend/          # Vite SPA
 │   └── backend/           # Express API
+├── source/                # Site screenshots & demo GIF for README
 ├── ops/                   # Manual deploy scripts, nginx, pm2, env examples
 ├── doc/                   # Specs, AWS, CI/CD runbook
 └── .github/workflows/     # CI + frontend/backend deploy
