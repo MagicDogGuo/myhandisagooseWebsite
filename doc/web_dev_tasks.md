@@ -66,7 +66,7 @@
 | T13 | StoreRating GraphQL 快取 | BE | ⬜ |
 | T14 | 首頁評分 + RWD／SEO 打磨 | FE | ⬜ |
 | T15 | 手動部署說明／腳本（S3+EC2） | Ops | ✅ |
-| T16 | GitHub Actions CI + 自動部署（可最後） | Ops | ⬜ |
+| T16 | GitHub Actions CI + 自動部署（可最後） | Ops | ✅ |
 
 狀態：⬜ 未做　🔄 進行中　✅ 完成
 
