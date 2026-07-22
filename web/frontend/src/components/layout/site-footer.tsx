@@ -23,7 +23,7 @@ export function SiteFooter() {
               Press Kit
             </Link>
             <a
-              href="mailto:hello@myhandisagoose.example"
+              href="mailto:samkuo8310@gmail.com"
               className="hover:text-signal"
             >
               Contact
