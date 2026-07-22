@@ -1,3 +1,11 @@
+# Local / secrets — do not commit
 coffeeKey.pem
+*.pem
 
-\privateInfo
+# Private key dirs / local env with real credentials
+privateInfo/
+ops/privateInfo/
+ops/env/goose-web.env
+
+# PROD parameter values (template is github-actions-aws-params.md)
+doc/github-actions-aws-params.local.md
