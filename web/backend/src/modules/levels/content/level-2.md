@@ -1,20 +1,20 @@
 ---
-title: 'Level 2: Moving Platform + Two Geese'
-promptEn: Time the moving platform and work with both geese to deliver bread.
+title: 'Level 2: Two Platforms — Bread + Goslings'
+promptEn: From the two moving platforms, put both breads in the nest, and catch 2 little geese into the nest.
 trainingFocus:
-  - Watch the platform rhythm before you move
-  - Coordinate carry and handoff between two geese
-  - Keep balance in a moving environment
+  - Learn the rhythm of both moving platforms before you commit
+  - Ferry bread off each platform into the nest without dropping it
+  - Catch 2 wriggly little geese and deliver them to the nest
 screenshots:
   - /placeholders/levels/level-2-1.jpg
   - /placeholders/levels/level-2-2.jpg
 pitfalls:
   - title: Bad platform timing
-    detail: Jumping when the platform leaves often means a water drop. Wait until it is close.
-  - title: Geese out of sync
-    detail: Both geese grabbing the same loaf can jam the run. Split roles, then meet at the nest.
+    detail: Jumping when either platform leaves often means a water drop. Wait until it is close, then grab the bread or goose.
+  - title: Dropping mid-carry
+    detail: Bread and little geese both slip easily. Keep them high across the platforms and release only over the nest opening.
 ---
 
 ## Overview
 
-This stage adds a **moving platform** and needs **two geese** working together to get bread home reliably.
+This stage has **two moving platforms**, each with bread. Put **both breads** in the nest, and catch **2 little geese** into the nest to clear the stage.
