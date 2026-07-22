@@ -1,3 +1,4 @@
+import { WanderingLittleGoose } from '@/components/home/wandering-little-goose';
 import { MetaIcon, SideQuestIcon } from '@/components/icons/store-icons';
 import { Button } from '@/components/ui/button';
 import { META_STORE_URL, SIDEQUEST_URL } from '@/lib/store-links';
@@ -15,12 +16,15 @@ const SCREEN = {
 export function HomeHero() {
   return (
     <section className="border-b border-chrome-indigo bg-canvas px-2 py-3 sm:px-4 sm:py-5">
-      <div className="animate-plate-boot relative mx-auto w-full max-w-4xl">
-        <div className="relative aspect-[1536/1024] w-full">
+      <div className="animate-plate-boot relative mx-auto w-full max-w-[min(100%,calc(56rem*1.2))]">
+        <div className="relative aspect-[1536/1024] w-full overflow-hidden">
+          {/* Behind CRT: occluded by opaque bezel / screen pixels */}
+          <WanderingLittleGoose />
+
           <img
             src="/crt-monitor.png"
             alt=""
-            className="pointer-events-none absolute inset-0 size-full object-contain select-none"
+            className="pointer-events-none absolute inset-0 z-10 size-full object-contain select-none"
             width={1536}
             height={1024}
             decoding="async"
@@ -29,7 +33,7 @@ export function HomeHero() {
           />
 
           <div
-            className="absolute overflow-hidden rounded-[0.35rem] sm:rounded-md"
+            className="absolute z-20 overflow-hidden rounded-[0.35rem] sm:rounded-md"
             style={SCREEN}
           >
             <img
