@@ -2,7 +2,8 @@
 
 Official site for the VR game **My Hand Is A Goose**: game intro, level guides, community feedback & polls, and Meta Store discovery.
 
-**Website demo:** [https://d3vlpanqbcn6jb.cloudfront.net/](https://d3vlpanqbcn6jb.cloudfront.net/)  
+**Website:** [https://myhandisagoose.samkuo.click/](https://myhandisagoose.samkuo.click/)  
+**CloudFront（backup）:** [https://d3vlpanqbcn6jb.cloudfront.net/](https://d3vlpanqbcn6jb.cloudfront.net/)  
 **Meta Store:** [My Hand is a Goose Demo](https://www.meta.com/en-gb/experiences/my-hand-is-a-goose-demo/1211524025377940/)
 
 ## Features
