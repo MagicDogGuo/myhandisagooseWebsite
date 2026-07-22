@@ -38,7 +38,7 @@ export type AppConfig = z.infer<typeof appConfigSchema>;
 function readRawConfig() {
   return {
     nodeEnv: process.env.NODE_ENV ?? 'development',
-    port: Number(process.env.PORT ?? 3001),
+    port: Number(process.env.PORT ?? 3002),
     corsOrigin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
     mongoUri: process.env.MONGO_URI ?? '',
     publicAssetBaseUrl:

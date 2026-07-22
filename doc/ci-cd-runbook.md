@@ -141,6 +141,8 @@ GitHub 設 `AWS_ROLE_ARN`。
 
 ## 3. 設定 GitHub Variables／Secrets
 
+實際 PROD 填值見 [`github-actions-aws-params.md`](github-actions-aws-params.md)。
+
 `Settings → Secrets and variables → Actions`
 
 | 名稱 | 類型 | 用途 |

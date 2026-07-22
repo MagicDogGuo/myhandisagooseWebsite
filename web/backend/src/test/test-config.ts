@@ -5,7 +5,7 @@ export function createTestConfig(
 ): AppConfig {
   return {
     nodeEnv: 'test',
-    port: 3001,
+    port: 3002,
     corsOrigin: 'http://localhost:5173',
     mongoUri: 'mongodb://127.0.0.1:27017/goose_web_test',
     publicAssetBaseUrl: 'http://localhost:5173',

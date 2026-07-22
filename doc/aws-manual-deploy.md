@@ -3,7 +3,7 @@
 > **Task：** T15（不含 GitHub Actions，見 T16／[`ci-cd-runbook.md`](ci-cd-runbook.md)）  
 > **前置：** 先完成 [`aws-setup-guide.md`](aws-setup-guide.md)（S3、CloudFront SPA fallback、EC2、nginx、`/etc/goose-web.env`）。  
 > **腳本：** repo 根目錄 `ops/`  
-> **文件版本：** v1.0　**最後更新：** 2026-07-20
+> **文件版本：** v1.1　**最後更新：** 2026-07-21
 
 ---
 
@@ -94,18 +94,18 @@ chmod +x ops/deploy-backend.sh
 腳本會：
 
 1. 本機 `web/backend`：`npm ci` → `npm run build`
-2. 打包／rsync：`dist/`、`package.json`、`package-lock.json`、`ops/pm2/ecosystem.config.cjs`（至遠端 app 目錄）
-3. SSH 遠端：`npm ci --omit=dev` → `pm2 reload goose-web`（或首次 `pm2 start`）
+2. 打包／rsync：`dist/`、`package.json`、`package-lock.json`、`ops/pm2/ecosystem.config.cjs`（至遠端 app 目錄；**不要**上傳本機 `node_modules`）
+3. SSH 遠端：**先** `npm ci --omit=dev`（必做，否則缺 `cookie-parser` 等套件）→ 再 `pm2 reload`／首次 `pm2 start`
 
 ### 首次上機額外步驟（只做一次）
 
 詳見 [`aws-setup-guide.md`](aws-setup-guide.md) §4：
 
 1. 寫好 `/etc/goose-web.env`（範本：`ops/env/goose-web.env.example`）
-2. 安裝 nginx 設定：`ops/nginx/goose-web.conf`
-3. `pm2 startup` + `pm2 save`
+2. 安裝 nginx：本機 `scp` `ops/nginx/goose-web.conf` → EC2，再 `sudo cp` 到 `/etc/nginx/conf.d/`（見 setup guide §4.6）
+3. 遠端 `npm ci --omit=dev` → `pm2 start ecosystem.config.cjs` → `pm2 startup`（貼上印出的 sudo 指令）→ `pm2 save`
 
-### 手動等效（示意）
+### 手動等效（bash／Git Bash）
 
 ```bash
 cd web/backend
@@ -133,6 +133,28 @@ pm2 status
 EOF
 ```
 
+### 手動等效（Windows PowerShell）
+
+> **注意：** 不要用 `$host`（PowerShell 唯讀內建變數）。用 `$ec2`。
+
+```powershell
+cd D:\_myproject_WebsitePorjects\myhandisagooseWebsite\web\backend
+npm ci
+npm run build
+
+$pem = "<path-to-ec2-pem>"
+$ec2 = "ec2-user@EC2_ELASTIC_IP"   # 換成實際 IP
+
+scp -i $pem -r dist package.json package-lock.json "${ec2}:/opt/goose-web/backend/"
+scp -i $pem "..\..\ops\pm2\ecosystem.config.cjs" "${ec2}:/opt/goose-web/backend/"
+
+ssh -i $pem $ec2
+# 進入 EC2 後：
+#   cd /opt/goose-web/backend
+#   npm ci --omit=dev          # 必做
+#   pm2 start ecosystem.config.cjs   # 或 pm2 restart goose-web --update-env
+#   pm2 save
+```
 ### 驗收（後端／全站）
 
 ```bash
@@ -144,7 +166,7 @@ curl -fsS "https://api.example.com/health"
 - [ ] `curl` health 成功
 - [ ] 前端頁面可打通 API（關卡列表等）
 - [ ] EC2 上 `pm2 logs goose-web` 無持續錯誤；`NODE_ENV=production`
-- [ ] Atlas 可見連線；安全組未對公網開 `3001`
+- [ ] Atlas 可見連線；安全組未對公網開 `3002`
 
 ---
 

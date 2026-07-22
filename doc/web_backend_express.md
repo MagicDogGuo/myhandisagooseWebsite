@@ -86,7 +86,7 @@ export type AppConfig = z.infer<typeof appConfigSchema>;
 function readRawConfig() {
   return {
     nodeEnv: process.env.NODE_ENV ?? 'development',
-    port: Number(process.env.PORT ?? 3001),
+    port: Number(process.env.PORT ?? 3002),
     corsOrigin: process.env.CORS_ORIGIN ?? 'http://localhost:5173',
     mongoUri: process.env.MONGO_URI ?? '',
     publicAssetBaseUrl: process.env.PUBLIC_ASSET_BASE_URL ?? 'http://localhost:5173',
@@ -412,7 +412,7 @@ process.on('SIGINT', () => void shutdown(0));
 
 ```
 開發：本機 Express ↔ Atlas（Compass）
-上線：CloudFront/S3（前端）→ EC2 nginx → Node:3001 ↔ Atlas
+上線：CloudFront/S3（前端）→ EC2 nginx → Node:3002 ↔ Atlas
 ```
 
 ### 10.2 手動上線後再自動化
@@ -430,7 +430,7 @@ M6 workflow：lint／typecheck／test／build／`npm audit` → scp／ssh 或 SS
 
 ```
 NODE_ENV=production
-PORT=3001
+PORT=3002
 CORS_ORIGIN=https://www.example.com
 MONGO_URI=mongodb+srv://.../goose_web
 PUBLIC_ASSET_BASE_URL=https://www.example.com
