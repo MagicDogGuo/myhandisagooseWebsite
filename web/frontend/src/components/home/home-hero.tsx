@@ -33,7 +33,7 @@ export function HomeHero() {
           />
 
           <div
-            className="absolute z-20 overflow-hidden rounded-[0.35rem] sm:rounded-md"
+            className="@container/crt absolute z-20 overflow-hidden rounded-[0.35rem] sm:rounded-md"
             style={SCREEN}
           >
             <img
@@ -46,30 +46,34 @@ export function HomeHero() {
               aria-hidden
             />
             <div className="crt-glass" aria-hidden />
-            <div className="relative z-10 flex h-full flex-col items-center justify-center gap-2 px-2 py-3 text-center sm:gap-3 sm:px-4 sm:py-5 md:gap-4 md:px-6">
-              <div className="animate-stamp max-w-[22rem] sm:max-w-md">
-                <h1 className="font-display text-boxart text-[clamp(1.05rem,3.6vw,2.35rem)] leading-[1.05] font-black tracking-tight">
+            {/*
+              Size against the CRT screen hole (@container/crt), not the viewport —
+              the hole is only ~52% of hero width, so sm: breakpoints fire too early.
+            */}
+            <div className="relative z-10 flex h-full flex-col items-center justify-center gap-[clamp(0.35rem,2.8cqi,1rem)] px-[clamp(0.4rem,3.5cqi,1.5rem)] py-[clamp(0.4rem,3cqi,1.25rem)] text-center">
+              <div className="animate-stamp w-full max-w-[min(100%,28rem)]">
+                <h1 className="font-display text-boxart text-[clamp(0.85rem,7.2cqi,2.35rem)] leading-[1.05] font-black tracking-tight">
                   My Hand Is A Goose
                 </h1>
-                <p className="mt-1.5 text-[clamp(0.65rem,1.55vw,1rem)] leading-snug font-bold text-white drop-shadow-sm sm:mt-2">
+                <p className="mt-[clamp(0.25rem,1.4cqi,0.5rem)] line-clamp-2 text-[clamp(0.55rem,3.1cqi,1rem)] leading-snug font-bold text-white drop-shadow-sm @[16rem]/crt:line-clamp-3 @[24rem]/crt:line-clamp-none">
                   Your hand becomes a goose head. Steal bread, scoop goslings
                   home, and try not to drop anything in the pond.
                 </p>
               </div>
-              <div className="flex w-full max-w-xs flex-col gap-1.5 sm:w-auto sm:max-w-none sm:flex-row sm:justify-center sm:gap-2">
+              <div className="flex w-full max-w-[min(100%,18rem)] flex-col gap-[clamp(0.3rem,1.6cqi,0.5rem)] @[22rem]/crt:max-w-none @[22rem]/crt:w-auto @[22rem]/crt:flex-row @[22rem]/crt:justify-center">
                 <Button
                   asChild
                   size="sm"
-                  className="animate-signal-chip h-8 w-full px-2.5 text-[0.7rem] sm:h-9 sm:w-auto sm:text-xs"
+                  className="animate-signal-chip h-[clamp(1.5rem,8cqi,2.25rem)] min-h-0 w-full gap-1 px-[clamp(0.4rem,2.5cqi,0.75rem)] text-[clamp(0.58rem,2.8cqi,0.8rem)] @[22rem]/crt:w-auto"
                 >
                   <a
                     href={META_STORE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <MetaIcon className="size-3.5 sm:size-4" />
-                    Meta Store
-                    <span className="animate-arrow-nudge" aria-hidden>
+                    <MetaIcon className="size-[1.1em] shrink-0" />
+                    <span className="min-w-0 truncate">Meta Store</span>
+                    <span className="animate-arrow-nudge shrink-0" aria-hidden>
                       →
                     </span>
                   </a>
@@ -78,16 +82,16 @@ export function HomeHero() {
                   asChild
                   size="sm"
                   variant="amber"
-                  className="animate-chip-pop-delay h-8 w-full px-2.5 text-[0.7rem] sm:h-9 sm:w-auto sm:text-xs"
+                  className="animate-chip-pop-delay h-[clamp(1.5rem,8cqi,2.25rem)] min-h-0 w-full gap-1 px-[clamp(0.4rem,2.5cqi,0.75rem)] text-[clamp(0.58rem,2.8cqi,0.8rem)] @[22rem]/crt:w-auto"
                 >
                   <a
                     href={SIDEQUEST_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <SideQuestIcon className="size-3.5 sm:size-4" />
-                    SideQuest
-                    <span className="animate-arrow-nudge" aria-hidden>
+                    <SideQuestIcon className="size-[1.1em] shrink-0" />
+                    <span className="min-w-0 truncate">SideQuest</span>
+                    <span className="animate-arrow-nudge shrink-0" aria-hidden>
                       →
                     </span>
                   </a>

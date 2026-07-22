@@ -1,10 +1,8 @@
-import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
 } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { DEMO_LEADERBOARD } from '@/data/demo-leaderboard';
@@ -78,14 +76,9 @@ export function DemoLeaderboard() {
     >
       <Card>
         <CardHeader>
-          <div className="section-label-bar flex flex-wrap items-center gap-3">
-            <CardTitle>Leaderboard</CardTitle>
-            <Badge>Demo data</Badge>
-          </div>
+          <div className="section-label-bar">Leaderboard</div>
           <CardDescription>
-            Whole-game clear times and drop totals (all levels). Placeholder
-            scores for now — Phase 2 will connect the live upload API without
-            changing this layout.
+            Play hard and make it onto the leaderboard!
           </CardDescription>
         </CardHeader>
         <CardContent>
