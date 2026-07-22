@@ -13,9 +13,19 @@ export function PollsPage() {
       <main className="px-3 py-6 sm:px-5 sm:py-8">
         <div className="section-label-bar rounded-t-sm">Polls</div>
         <div className="bevel-inset animate-rise rounded-b-sm px-4 py-5 sm:px-5">
-          <h1 className="font-display text-boxart bg-lavender/80 -mx-4 -mt-5 mb-4 px-4 py-6 text-3xl leading-none sm:-mx-5 sm:px-5 sm:text-4xl">
-            Cast your vote
-          </h1>
+          <div className="bg-lavender/80 -mx-4 -mt-5 mb-4 flex flex-col items-start gap-4 px-4 py-6 sm:-mx-5 sm:flex-row sm:items-center sm:gap-5 sm:px-5">
+            <img
+              src="/littleGoose.gif"
+              alt=""
+              width={120}
+              height={120}
+              className="size-24 shrink-0 object-contain sm:size-28"
+              decoding="async"
+            />
+            <h1 className="font-display text-boxart text-3xl leading-none sm:text-4xl">
+              Cast your vote
+            </h1>
+          </div>
           <p className="text-ink-soft mb-6 max-w-2xl text-xs leading-relaxed sm:text-sm">
             One anonymous vote per poll on this browser. Results update live
             after you vote; reload keeps your choice via a private cookie — no
