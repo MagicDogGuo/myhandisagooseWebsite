@@ -58,6 +58,16 @@ export function HomeFeatures() {
             </li>
           ))}
         </ul>
+        <div className="bevel-inset mt-5 aspect-video w-full overflow-hidden rounded-sm">
+          <iframe
+            className="h-full w-full"
+            src="https://www.youtube.com/embed/iqbhXyVhIhQ?si=og-LTR-wELvOmwgp"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          />
+        </div>
       </div>
     </section>
   );
